@@ -16,14 +16,14 @@ import { Lens } from 'lens-protocol';
 // 2. add "connected: true" to "res.render" options
 
 export default router => {
-	router.get('/', async (req, res) => {
+	router.get('/', authenticate, async (req, res) => {
 		const data = await getPublications();
 		res.render('index', {
 			articles: data,
 			moment: moment,
 			linkifyHtml: linkifyHtml,
 			text_truncate: text_truncate,
-			//connected: true
+			connected: true
 		})
 	});
 
@@ -43,7 +43,7 @@ export default router => {
 		const name = req.params.name;
 		const data = await getTags(name);
 		if (data) {
-			res.render('hashtag', { 
+			res.render('hashtag', {
 				articles: data,
 				moment: moment,
 				linkifyHtml: linkifyHtml,

@@ -72,11 +72,7 @@ window.onload = () => {
 
     // connect wallet or get address if connected
     async function walletConnect() {
-      console.log(window.ethereum, '<< WINDOW ETHEREUM');
-
       try {
-        console.log(window.ethereum?.selectedAddress, '<< SELECTED ADDRESS BEFORE CONNECT');
-
         if (window.ethereum?.selectedAddress) {
           address = window.ethereum.selectedAddress
 
@@ -332,12 +328,35 @@ window.onload = () => {
           ?.sort((a, b) => Number(a.id) - Number(b.id))
           ?.sort((a, b) => (a.isDefault === b.isDefault ? 0 : a.isDefault ? -1 : 1));
 
-        // we can store all profiles data
-        // we can store current profile data
+        //   {
+        //     "id": "",
+        //     "name": null,
+        //     "bio": null,
+        //     "attributes": [],
+        //     "followNftAddress": null,
+        //     "metadata": null,
+        //     "isDefault": false,
+        //     "picture": null,
+        //     "handle": "",
+        //     "coverPicture": null,
+        //     "ownedBy": "",
+        //     "dispatcher": null,
+        //     "stats": {
+        //         "totalFollowers": 0,
+        //         "totalFollowing": 0,
+        //         "totalPosts": 0,
+        //         "totalComments": 0,
+        //         "totalMirrors": 0,
+        //         "totalPublications": 0,
+        //         "totalCollects": 0
+        //     },
+        //     "followModule": null
+        // }
 
-        // we can store current profile id
-        if (currentProfile?.id) {
+        // we can store current profile id and handle
+        if (currentProfile?.id && currentProfile?.handle) {
           document.cookie = `lensCurrentProfileId=${currentProfile.id}`
+          document.cookie = `lensCurrentProfileHandle=${currentProfile.handle}`
         }
       } else {
         triggerModalById('#lens-claim-modal')

@@ -6,6 +6,7 @@ import { uploadIpfs } from '../../services/ipfs.service'
 import { signedTypeData, splitSignature } from '../../services/ethers.service';
 import { getLensHub } from '../hub';
 import { pollUntilIndexed } from '../indexer/has-transaction-been-indexed'
+import { getTagsFromText } from '../../utils'
 
 const _signCreatePostTypedData = async (request, accessToken) => {
   const options = {
@@ -25,25 +26,27 @@ const _signCreatePostTypedData = async (request, accessToken) => {
   return { result, signature };
 };
 
-export const createPost = async (address = '', profileId = '', accessToken = '') => {
+export const createPost = async (postData, { address = '', profileId = '', accessToken = '' }) => {
   if (!address || !profileId || !accessToken) {
     throw new Error('Must provide all parameters to run this')
   }
 
+  const { content, name, externalUrl } = postData
+
   const ipfsResult = await uploadIpfs({
+    tags: getTagsFromText(content),
+    content,
+    name,
+    external_url: externalUrl ?? null,
     version: '2.0.0',
     mainContentFocus: PUBLICATION_MAIN_FOCUS.TEXT_ONLY,
     metadata_id: uuidv4(),
     description: 'Description',
     locale: 'en-US',
-    content: 'Content',
-    external_url: null,
-    image: null,
-    imageMimeType: null,
-    name: 'Name',
+    appId: process.env.APP_NAME ?? 'Lensfrens',
     attributes: [],
-    tags: ['using_api_examples'],
-    appId: 'api_examples_github',
+    // image: null,
+    // imageMimeType: null,
   });
 
   // const ipfsResult = {

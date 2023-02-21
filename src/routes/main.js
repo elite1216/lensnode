@@ -31,9 +31,10 @@ export default router => {
 		const name = req.params.name;
 		const handleName = `${name}.lens`
 		const data = await getProfile(handleName);
+		const topTags = await getTrendingTags();
 		if (data && data.profile) {
 			const profileData = getCleanedProfile(data.profile);
-			res.render('profile', { user: profileData });
+			res.render('profile', { user: profileData, topTags: topTags });
 		} else {
 			res.status(404).render('common/404');
 		}
@@ -42,12 +43,14 @@ export default router => {
 	router.get('/hashtag/:name', async (req, res) => {
 		const name = req.params.name;
 		const data = await getTags(name);
+		const topTags = await getTrendingTags();
 		if (data) {
 			res.render('hashtag', { 
 				articles: data,
 				moment: moment,
 				linkifyHtml: linkifyHtml,
-				text_truncate: text_truncate
+				text_truncate: text_truncate,
+				topTags: topTags
 			});
 		} else {
 			res.status(404).render('common/404');
@@ -59,13 +62,15 @@ export default router => {
 		const link = req.params.link
 		const data = await getPublication(link);
 		const comments = await getComments(link)
+		const topTags = await getTrendingTags();
 		if (data) {
 			res.render('post', {
 				post: data,
 				moment: moment,
 				comments: comments,
 				linkifyHtml: linkifyHtml,
-				text_truncate: text_truncate
+				text_truncate: text_truncate,
+				topTags: topTags
 			});
 		} else {
 			res.status(404).render('common/404');
@@ -74,17 +79,22 @@ export default router => {
 
 	router.get('/trending', async (req, res) => {
 		const data = await getPublications("TOP_COLLECTED","POST");
-			res.render('trending', {
-				articles: data,
-				moment: moment,
-				linkifyHtml: linkifyHtml,
-				text_truncate: text_truncate,
-				//connected: true
-			})
+		const topTags = await getTrendingTags();
+		res.render('trending', {
+			articles: data,
+			moment: moment,
+			linkifyHtml: linkifyHtml,
+			text_truncate: text_truncate,
+			topTags: topTags
+		})
 	})
 
 	router.get('/notifications', async (req, res) => {
 		res.render('notifications')
+	})
+
+	router.get('/explorer', async (req, res) => {
+		res.render('explorer')
 	})
 
 	router.use(async (req, res) => {

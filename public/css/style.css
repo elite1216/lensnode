@@ -430,8 +430,8 @@ input:focus {
 }
 
 .Top-input-divider {
-  min-height: 2px;
-  height: 2px;
+  min-height: 0.5px;
+  height: 0.5px;
   background-color: #e6ecf0;
   content: "";
 }

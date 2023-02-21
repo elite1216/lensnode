@@ -75,12 +75,8 @@ const QUERY_PROFILE_BY_ID = gql`
 `
 
 const GET_PUBLICATIONS_QUERY = gql`
-  query {
-    explorePublications(request: {
-      sortCriteria: LATEST,
-      publicationTypes: [POST],
-      limit: 50
-    }) {
+  query ExplorePublications($request: ExplorePublicationRequest!) {
+    explorePublications(request: $request) {
       items {
         __typename
         ... on Post {
@@ -272,8 +268,16 @@ const GET_TAGS = gql`
   ${collectModuleFragment}
   ${referenceModuleFragment}
 `
-
-
+const GET_TRENDING_TAGS = gql`
+  query Trending($request: AllPublicationsTagsRequest!) {
+    allPublicationsTags(request: $request) {
+      items {
+        tag
+        total
+      }
+    }
+  }
+`
 
 export {
   QUERY_PROFILE_BY_ID,
@@ -281,5 +285,6 @@ export {
   GET_SINGLE_POST,
   GET_POST_COMMENTS,
   HAS_TX_HASH_BEEN_INDEXED,
-  GET_TAGS
+  GET_TAGS,
+  GET_TRENDING_TAGS
 }

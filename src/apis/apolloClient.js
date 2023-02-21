@@ -5,7 +5,8 @@ import {
     GET_SINGLE_POST,
     GET_POST_COMMENTS,
     HAS_TX_HASH_BEEN_INDEXED,
-    GET_TAGS
+    GET_TAGS,
+    GET_TRENDING_TAGS
 } from './queries';
 import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations';
 import fetch from 'cross-fetch';
@@ -39,9 +40,16 @@ const getProfile = async (handle) => {
     }
 };
 
-const getPublications = async () => {
+const getPublications = async (query,type) => {
     const { data } = await client.query({
         query: GET_PUBLICATIONS_QUERY,
+        variables: {
+            request: { 
+                sortCriteria: query,
+                publicationTypes: type,
+                limit: 50 
+            }
+        }
     });
     return data.explorePublications.items;
 };
@@ -124,6 +132,17 @@ const getTags = async (query) => {
     });
     return data.search.items;
 };
+
+const getTrendingTags = async () => {
+    const { data } = await client.query({
+        query: GET_TRENDING_TAGS,
+        variables: {
+            request: { sort: "MOST_POPULAR", limit: 5}
+        }
+    });
+    return data.allPublicationsTags.items;
+};
+
 export {
     // QUERIES
     getProfile,
@@ -132,6 +151,7 @@ export {
     getComments,
     hasTxHashBeenIndexed,
     getTags,
+    getTrendingTags,
     // MUTATIONS
     refresh,
     createPostTypedData

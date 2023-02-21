@@ -2,9 +2,10 @@ import moment from 'moment'
 import linkifyHtml from "linkify-html";
 import 'linkify-plugin-hashtag'
 import 'linkify-plugin-mention'
-import { getProfile, getPublications, getPublication, getComments, getTags } from '../apis/apolloClient'
+import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags } from '../apis/apolloClient'
 import { getCleanedProfile, text_truncate } from '../utils';
 import { authenticate } from '../middlewares/authenticate'
+
 //import { Lens } from 'lens-protocol';
 //import { TagSortCriteria, useTrendingQuery } from 'lens';
 
@@ -15,11 +16,13 @@ import { authenticate } from '../middlewares/authenticate'
 export default router => {
 	router.get('/' , async (req, res) => {
 		const data = await getPublications("LATEST","POST");
+		const topTags = await getTrendingTags();
 		res.render('index', {
 			articles: data,
 			moment: moment,
 			linkifyHtml: linkifyHtml,
 			text_truncate: text_truncate,
+			topTags: topTags
 			//connected: true
 		})
 	});

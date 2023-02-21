@@ -140,9 +140,9 @@ const getTrendingTags = async () => {
             request: { sort: "MOST_POPULAR", limit: 5}
         }
     });
+    //console.log(data.allPublicationsTags.items)
     return data.allPublicationsTags.items;
 };
-
 export {
     // QUERIES
     getProfile,

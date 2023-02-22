@@ -5,11 +5,7 @@ import 'linkify-plugin-mention'
 import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags, getNotificationsCount } from '../apis/apolloClient'
 import { getCleanedProfile, text_truncate } from '../utils';
 import { authenticate } from '../middlewares/authenticate'
-import { web3Modal } from '../utils/uti';
 
-
-
-//import { TagSortCriteria, useTrendingQuery } from 'lens';
 
 // all you need to do now to protect any route and make use of it inside of ejs part:
 // 1. add "authenticate" as a middleware for your route
@@ -100,7 +96,7 @@ export default router => {
 	router.get('/explore', async (req, res) => {
 		const topTags = await getTrendingTags();
 		//const cont = initWalletConnect();
-		res.render('explore', {abaa: web3Modal})
+		res.render('explore')
 	})
 
 	router.use(async (req, res) => {

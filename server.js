@@ -9,7 +9,7 @@ import https from "https";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import chalk from 'chalk'
-import routes from "./src/routes";
+import routes from "./src/routes/index.js";
 
 const router = express.Router()
 

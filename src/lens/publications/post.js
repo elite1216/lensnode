@@ -4,7 +4,7 @@ import { createPostTypedData } from '../../apis/apolloClient.js'
 import { uploadIpfs } from '../../services/ipfs.service.js'
 import { signedTypeData, splitSignature } from '../../services/ethers.service.js';
 import { getLensHub } from '../hub.js';
-import { pollUntilIndexed } from '../indexer/has-transaction-been-indexed'
+import { pollUntilIndexed } from '../indexer/has-transaction-been-indexed.js'
 
 const _signCreatePostTypedData = async (request, accessToken) => {
   const options = {

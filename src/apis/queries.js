@@ -15,7 +15,7 @@ import {
   mirrorFieldsFragment,
   commentMirrorOfFieldsFragment
   } 
-from './fragments';
+from './fragments.js';
 
 const QUERY_PROFILE_BY_ID = gql`
   query Profile($profileRequest: SingleProfileQueryRequest!) {

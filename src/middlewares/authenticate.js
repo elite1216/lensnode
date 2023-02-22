@@ -1,5 +1,5 @@
-import { decodeJWT, convertDateToUnixTimestamp } from '../utils'
-import { refresh } from '../apis/apolloClient'
+import { decodeJWT, convertDateToUnixTimestamp } from '../utils/index.js'
+import { refresh } from '../apis/apolloClient.js'
 
 // if you are familiar with middleware, you may know that
 // next() call means middleware check is negative (no errors found)

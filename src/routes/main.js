@@ -2,15 +2,15 @@ import moment from 'moment'
 import linkifyHtml from "linkify-html";
 import 'linkify-plugin-hashtag'
 import 'linkify-plugin-mention'
-import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags, getNotificationsCount } from '../apis/apolloClient'
-import { getCleanedProfile, text_truncate } from '../utils';
-import { authenticate } from '../middlewares/authenticate'
+import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags, getNotificationsCount } from '../apis/apolloClient.js'
+import { getCleanedProfile, text_truncate } from '../utils/index.js';
+import { authenticate } from '../middlewares/authenticate.js'
 
 
 // all you need to do now to protect any route and make use of it inside of ejs part:
 // 1. add "authenticate" as a middleware for your route
 // 2. add "connected: true" to "res.render" options
-//console.log(initWalletConnect)
+
 export default router => {
 	router.get('/', async (req, res) => {
 		const data = await getPublications("LATEST","POST");

@@ -1,6 +1,6 @@
 import { decodeJWT } from "../utils/index.js";
 import { createPost } from '../lens/publications/post.js'
-import { authenticate } from "../middlewares/authenticate";
+import { authenticate } from "../middlewares/authenticate.js";
 import { parseCookies } from '../utils/index.js'
 
 export default router => {

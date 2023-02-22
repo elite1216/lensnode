@@ -2,21 +2,25 @@ import moment from 'moment'
 import linkifyHtml from "linkify-html";
 import 'linkify-plugin-hashtag'
 import 'linkify-plugin-mention'
-import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags } from '../apis/apolloClient'
+import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags, getNotificationsCount } from '../apis/apolloClient'
 import { getCleanedProfile, text_truncate } from '../utils';
 import { authenticate } from '../middlewares/authenticate'
+import { web3Modal } from '../utils/uti';
 
-//import { Lens } from 'lens-protocol';
+
+
 //import { TagSortCriteria, useTrendingQuery } from 'lens';
 
 // all you need to do now to protect any route and make use of it inside of ejs part:
 // 1. add "authenticate" as a middleware for your route
 // 2. add "connected: true" to "res.render" options
-
+//console.log(initWalletConnect)
 export default router => {
-	router.get('/' , async (req, res) => {
+	router.get('/', async (req, res) => {
 		const data = await getPublications("LATEST","POST");
 		const topTags = await getTrendingTags();
+		//const notices = await getNotificationsCount();
+		//console.log(notices)
 		res.render('index', {
 			articles: data,
 			moment: moment,
@@ -93,11 +97,14 @@ export default router => {
 		res.render('notifications')
 	})
 
-	router.get('/explorer', async (req, res) => {
-		res.render('explorer')
+	router.get('/explore', async (req, res) => {
+		const topTags = await getTrendingTags();
+		//const cont = initWalletConnect();
+		res.render('explore', {abaa: web3Modal})
 	})
 
 	router.use(async (req, res) => {
-		res.status(404).render('common/404');
+		const topTags = await getTrendingTags();
+		res.status(404).render('common/404',{topTags:topTags});
 	})
 }

@@ -278,6 +278,15 @@ const GET_TRENDING_TAGS = gql`
     }
   }
 `
+const GET_NOTIFICATIONS_COUNT= gql`
+  query NotificationCount($request: NotificationRequest!) {
+    notifications(request: $request) {
+      pageInfo {
+        totalCount
+      }
+    }
+  }
+`
 
 export {
   QUERY_PROFILE_BY_ID,
@@ -286,5 +295,6 @@ export {
   GET_POST_COMMENTS,
   HAS_TX_HASH_BEEN_INDEXED,
   GET_TAGS,
-  GET_TRENDING_TAGS
+  GET_TRENDING_TAGS,
+  GET_NOTIFICATIONS_COUNT
 }

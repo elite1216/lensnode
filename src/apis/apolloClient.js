@@ -6,7 +6,8 @@ import {
     GET_POST_COMMENTS,
     HAS_TX_HASH_BEEN_INDEXED,
     GET_TAGS,
-    GET_TRENDING_TAGS
+    GET_TRENDING_TAGS,
+    GET_NOTIFICATIONS_COUNT
 } from './queries';
 import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations';
 import fetch from 'cross-fetch';
@@ -143,6 +144,18 @@ const getTrendingTags = async () => {
     //console.log(data.allPublicationsTags.items)
     return data.allPublicationsTags.items;
 };
+
+const getNotificationsCount = async () => {
+    const { data } = await client.query({
+        query: GET_NOTIFICATIONS_COUNT,
+        variables: {
+            request: { profileId: "0x2339"}
+        }
+    });
+    //console.log(data.totalNotifications)
+    return data.totalNotifications;
+};
+
 export {
     // QUERIES
     getProfile,
@@ -152,6 +165,7 @@ export {
     hasTxHashBeenIndexed,
     getTags,
     getTrendingTags,
+    getNotificationsCount,
     // MUTATIONS
     refresh,
     createPostTypedData

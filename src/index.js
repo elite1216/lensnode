@@ -31,7 +31,7 @@ app.set("views", "./src/views");
 app.set("view engine", "ejs");
 
 app.use("/", router);
-
+/*
 let server;
 let link;
 
@@ -81,4 +81,8 @@ server.on("listening", () => {
   const port = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
 
   console.info(`${chalk.blue(`App listening on port ${port}`)} ${chalk.yellow(link)}`);
+});
+*/
+const server = app.listen(5000, () => {
+  console.log(`Express is running on port ${server.address().port} http://localhost:5000`);
 });

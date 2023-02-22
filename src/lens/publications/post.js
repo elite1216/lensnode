@@ -1,4 +1,3 @@
-import { BigNumber, utils } from 'ethers';
 import { v4 as uuidv4 } from 'uuid';
 import { PUBLICATION_MAIN_FOCUS } from '../../constants/lens';
 import { createPostTypedData } from '../../apis/apolloClient'

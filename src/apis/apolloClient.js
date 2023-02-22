@@ -8,8 +8,8 @@ import {
     GET_TAGS,
     GET_TRENDING_TAGS,
     GET_NOTIFICATIONS_COUNT
-} from './queries';
-import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations';
+} from './queries.js';
+import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations.js';
 import fetch from 'cross-fetch';
 
 //const API_URL = 'https://api-mumbai.lens.dev'

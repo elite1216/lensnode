@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
-import { PUBLICATION_MAIN_FOCUS } from '../../constants/lens';
-import { createPostTypedData } from '../../apis/apolloClient'
-import { uploadIpfs } from '../../services/ipfs.service'
-import { signedTypeData, splitSignature } from '../../services/ethers.service';
-import { getLensHub } from '../hub';
+import { PUBLICATION_MAIN_FOCUS } from '../../constants/lens.js';
+import { createPostTypedData } from '../../apis/apolloClient.js'
+import { uploadIpfs } from '../../services/ipfs.service.js'
+import { signedTypeData, splitSignature } from '../../services/ethers.service.js';
+import { getLensHub } from '../hub.js';
 import { pollUntilIndexed } from '../indexer/has-transaction-been-indexed'
 
 const _signCreatePostTypedData = async (request, accessToken) => {

@@ -138,11 +138,13 @@ const getTrendingTags = async () => {
     const { data } = await client.query({
         query: GET_TRENDING_TAGS,
         variables: {
-            request: { sort: "MOST_POPULAR", limit: 5}
+            request: { sort: "MOST_POPULAR", limit: 7}
         }
     });
-    //console.log(data.allPublicationsTags.items)
-    return data.allPublicationsTags.items;
+    const tg = data.allPublicationsTags.items;
+    const tagsArr = [...tg];
+    tagsArr.splice(0,1)
+    return tagsArr;
 };
 
 const getNotificationsCount = async () => {

@@ -4,7 +4,9 @@ import 'linkify-plugin-hashtag'
 import 'linkify-plugin-mention'
 import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags, getNotificationsCount } from '../apis/apolloClient.js'
 import { getCleanedProfile, text_truncate } from '../utils/index.js';
-import { authenticate } from '../middlewares/authenticate.js'
+import truncate from 'truncate';
+import { authenticate } from '../middlewares/authenticate.js';
+
 
 
 // all you need to do now to protect any route and make use of it inside of ejs part:
@@ -22,6 +24,7 @@ export default router => {
 			moment: moment,
 			linkifyHtml: linkifyHtml,
 			text_truncate: text_truncate,
+			truncate: truncate,
 			topTags: topTags
 			//connected: true
 		})

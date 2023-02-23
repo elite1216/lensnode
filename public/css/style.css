@@ -27,7 +27,7 @@ code {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /*font-family: "Assistant", sans-serif;*/
+  font-family: "Assistant", sans-serif;
   word-break: break-word;
 }
 
@@ -1143,8 +1143,9 @@ input:focus {
   word-break: break-word;
   color: #111;
   padding: 2px 15px;
+  font-family: "Segoe UI" !important;
 }
-
+.post-content p{font-family: "Segoe UI" !important;}
 .post-link {
   margin: 10px 15px;
   font-size: 15px;
@@ -4515,3 +4516,4 @@ body.dark_mode .reward_pool {
   border-bottom: 1px solid #e6ecf0;
 }
 #reply-input{font-family: "Assistant", sans-serif;}
+.jYxAGf{z-index: 999 !important;}

@@ -2,7 +2,7 @@
 <%	
 	//console.log(post)
 	const IPFS_GATEWAY = 'https://gateway.ipfscdn.io/ipfs/';
-	const userHandle = (post.profile.handle).replace('.lens', "")
+	const userHandle = (post?.profile?.handle).replace('.lens', "")
 	const userImg = (post.profile.picture?.original?.url).replace('ipfs://', IPFS_GATEWAY);
 	const contentMedia = post.metadata?.media
 	const linkyfyOptions = {truncate: 26,className:'blink',nl2br:true,formatHref: {

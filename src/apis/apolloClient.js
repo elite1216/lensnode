@@ -7,7 +7,8 @@ import {
     HAS_TX_HASH_BEEN_INDEXED,
     GET_TAGS,
     GET_TRENDING_TAGS,
-    GET_NOTIFICATIONS_COUNT
+    GET_NOTIFICATIONS_COUNT,
+    GET_PROFILE_BY_ID
 } from './queries.js';
 import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations.js';
 import fetch from 'cross-fetch';
@@ -32,6 +33,20 @@ const getProfile = async (handle) => {
             query: QUERY_PROFILE_BY_ID,
             variables: {
                 profileRequest: { handle: handle }
+            }
+        });
+        return data;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+};
+const getProfileById = async (id) => {
+    try {
+        const { data } = await client.query({
+            query: GET_PROFILE_BY_ID,
+            variables: {
+                profileRequest: { profileId: id }
             }
         });
         return data;
@@ -168,6 +183,7 @@ export {
     getTags,
     getTrendingTags,
     getNotificationsCount,
+    getProfileById,
     // MUTATIONS
     refresh,
     createPostTypedData

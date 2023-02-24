@@ -10,6 +10,7 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 import chalk from 'chalk'
 import routes from "./src/routes/index.js";
+import { connections } from './src/utils/userVerify.js'
 
 const router = express.Router()
 
@@ -18,6 +19,7 @@ routes(router)
 const app = express();
 
 app.use(cookieParser())
+app.use(connections.userConnection);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

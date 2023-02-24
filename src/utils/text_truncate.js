@@ -20,5 +20,5 @@ function getcookie(req) {
   // user=someone; session=QyhYzXhkTZawIb5qSl3KKyPVN (this is my cookie i get)
   return cookie.split('; ');
 }
-
+//var cookie = getcookie(req);
 export { text_truncate };

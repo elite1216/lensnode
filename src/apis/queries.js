@@ -74,6 +74,63 @@ const QUERY_PROFILE_BY_ID = gql`
   }
 `
 
+const GET_PROFILE_BY_ID = gql`
+  query Profile($profileRequest: SingleProfileQueryRequest!) {
+    profile(request: $profileRequest) {
+      id
+      name
+      metadata
+      handle
+      bio
+      stats {
+        totalFollowers
+        totalFollowing
+        totalPosts
+        totalComments
+        totalMirrors
+        totalPublications
+        totalCollects
+      }
+      picture {
+        ... on NftImage {
+          contractAddress
+          tokenId
+          uri
+          verified
+        }
+        ... on MediaSet {
+          original {
+            url
+            mimeType
+          }
+        }
+        __typename
+      }
+      coverPicture {
+        ... on NftImage {
+          contractAddress
+          tokenId
+          uri
+          verified
+        }
+        ... on MediaSet {
+          original {
+            url
+            mimeType
+          }
+        }
+        __typename
+      }
+      attributes {
+        displayType
+        traitType
+        key
+        value
+      }
+    }
+  }
+`
+
 const GET_PUBLICATIONS_QUERY = gql`
   query ExplorePublications($request: ExplorePublicationRequest!) {
     explorePublications(request: $request) {
@@ -296,5 +353,6 @@ export {
   HAS_TX_HASH_BEEN_INDEXED,
   GET_TAGS,
   GET_TRENDING_TAGS,
-  GET_NOTIFICATIONS_COUNT
+  GET_NOTIFICATIONS_COUNT,
+  GET_PROFILE_BY_ID
 }

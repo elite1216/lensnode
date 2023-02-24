@@ -1,5 +1,4 @@
 <% articles.forEach(function (article) { 
-  const IPFS_GATEWAY='https://gateway.ipfscdn.io/ipfs/' ; 
   const userHandle=(article.profile?.handle)?.replace('.lens', "" ); 
   const userImg=article.profile.picture?.original?.url;
   const contentMedia=article.metadata?.media; 

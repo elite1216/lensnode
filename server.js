@@ -21,6 +21,8 @@ const app = express();
 app.use(cookieParser())
 app.use(connections.userConnection);
 
+global.IPFS_GATEWAY='https://gateway.ipfscdn.io/ipfs/'; 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 

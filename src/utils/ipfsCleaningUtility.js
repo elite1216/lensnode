@@ -1,4 +1,3 @@
-const IPFS_GATEWAY = 'https://gateway.ipfscdn.io/ipfs/';
 const createURL = (urlString) => {
     if (!/^https?:\/\//i.test(urlString)) {
         urlString = 'http://' + urlString;

@@ -1,8 +1,7 @@
 <%- include('./common/header')%>
 <%
-	const IPFS_GATEWAY = 'https://gateway.ipfscdn.io/ipfs/';
 	const userHandle = (post?.profile?.handle).replace('.lens', "")
-	const userImg = (post.profile.picture?.original?.url).replace('ipfs://', IPFS_GATEWAY);
+	const userImg = post.profile.picture?.original?.url?.replace('ipfs://', IPFS_GATEWAY);
 	const contentMedia = post.metadata?.media
 	const linkyfyOptions = {truncate: 26,className:'blink',nl2br:true,formatHref: {
 	    hashtag: (val) => `/hashtag/${val.substr(1)}`,
@@ -92,9 +91,9 @@
 	                            </p>
 	                        </div>
 						    <%- include('./common/postStats', {article: post}) %>
-						    <div class="reply-sec">
-	                        	<%- include('./common/reply', {userHandle: userHandle, userImg: userImg}) %>
-	                        </div>
+						    <% if(locals.userId){ %><div class="reply-sec">
+	                        	<%- include('./common/reply', {userHandle: userHandle}) %>
+	                        </div><%}else{}%>
 						    <%- include('./common/comments') %>
 	                    </div>
 	                </div>

@@ -3,7 +3,7 @@ import linkifyHtml from "linkify-html";
 import 'linkify-plugin-hashtag'
 import 'linkify-plugin-mention'
 import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags, getNotificationsCount } from '../apis/apolloClient.js'
-import { getCleanedProfile, text_truncate } from '../utils/index.js';
+import { getCleanedProfile } from '../utils/index.js';
 import truncate from 'truncate';
 import { authenticate } from '../middlewares/authenticate.js';
 
@@ -23,7 +23,6 @@ export default router => {
 			articles: data,
 			moment: moment,
 			linkifyHtml: linkifyHtml,
-			text_truncate: text_truncate,
 			truncate: truncate,
 			topTags: topTags
 			//connected: true
@@ -52,7 +51,7 @@ export default router => {
 				articles: data,
 				moment: moment,
 				linkifyHtml: linkifyHtml,
-				text_truncate: text_truncate,
+				truncate: truncate,
 				topTags: topTags
 			});
 		} else {
@@ -72,7 +71,7 @@ export default router => {
 				moment: moment,
 				comments: comments,
 				linkifyHtml: linkifyHtml,
-				text_truncate: text_truncate,
+				truncate: truncate,
 				topTags: topTags
 			});
 		} else {
@@ -87,7 +86,7 @@ export default router => {
 			articles: data,
 			moment: moment,
 			linkifyHtml: linkifyHtml,
-			text_truncate: text_truncate,
+			truncate: truncate,
 			topTags: topTags
 		})
 	})

@@ -14,9 +14,9 @@ import { parseCookies } from '../utils/index.js'
 
 export default router => {
 	router.get('/', async (req, res) => {
-		const { cookies: { lensCurrentProfileId, accessToken } } = req
-		const token = parseCookies(res.get('Set-Cookie'))?.accessToken ?? accessToken
-		const userId = parseCookies(res.get('Set-Cookie'))?.lensCurrentProfileId ?? lensCurrentProfileId
+		//const { cookies: { lensCurrentProfileId, accessToken } } = req
+		//const token = parseCookies(res.get('Set-Cookie'))?.accessToken ?? accessToken
+		//const userId = parseCookies(res.get('Set-Cookie'))?.lensCurrentProfileId ?? lensCurrentProfileId
 		const data = await getPublications("LATEST","POST");
 		const topTags = await getTrendingTags();
 		//const notices = await getNotificationsCount();
@@ -28,7 +28,7 @@ export default router => {
 			linkifyHtml: linkifyHtml,
 			truncate: truncate,
 			topTags: topTags,
-			userId: userId
+			//userId: userId
 			//connected: true
 		})
 	});

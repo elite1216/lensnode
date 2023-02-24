@@ -6,8 +6,7 @@ import { getProfile, getPublications, getPublication, getComments, getTags, getT
 import { getCleanedProfile } from '../utils/index.js';
 import truncate from 'truncate';
 import { authenticate } from '../middlewares/authenticate.js';
-
-
+import { parseCookies } from '../utils/index.js'
 
 // all you need to do now to protect any route and make use of it inside of ejs part:
 // 1. add "authenticate" as a middleware for your route
@@ -15,16 +14,21 @@ import { authenticate } from '../middlewares/authenticate.js';
 
 export default router => {
 	router.get('/', async (req, res) => {
+		const { cookies: { lensCurrentProfileId, accessToken } } = req
+		const token = parseCookies(res.get('Set-Cookie'))?.accessToken ?? accessToken
+		const userId = parseCookies(res.get('Set-Cookie'))?.lensCurrentProfileId ?? lensCurrentProfileId
 		const data = await getPublications("LATEST","POST");
 		const topTags = await getTrendingTags();
 		//const notices = await getNotificationsCount();
 		//console.log(notices)
+
 		res.render('index', {
 			articles: data,
 			moment: moment,
 			linkifyHtml: linkifyHtml,
 			truncate: truncate,
-			topTags: topTags
+			topTags: topTags,
+			userId: userId
 			//connected: true
 		})
 	});

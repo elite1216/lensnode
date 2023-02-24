@@ -269,6 +269,8 @@
 															<% } %>
 										</div>
 						</nav>
+
+						<!-- if(!userId){}else{%> -->
 						<div class="bottom_user_part" id="bottom_user">
 							<div class="user_avater">
 								<img alt="" src="https://i.postimg.cc/MZdNmMMN/user.png" class="home_pro_pic" width="100%"
@@ -289,6 +291,8 @@
 								<li><a href="#">Log out @mrhripon98</a></li>
 							</ul>
 						</div>
+						
+
 
 						<script>
 
@@ -560,3 +564,11 @@
 		})
 	</script>
 	<script type="text/javascript" src="/js/web3Modal.js"></script>
+	<%
+	/*if (req.cookies['lensCurrentProfileId']) {
+			console.log('You are connected to Lens.')
+		} else{
+			console.log('no profile')
+		}
+	//var cookie = getcookie(req);*/
+	%>

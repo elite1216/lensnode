@@ -5,13 +5,18 @@ import {
     GET_SINGLE_POST,
     GET_POST_COMMENTS,
     HAS_TX_HASH_BEEN_INDEXED,
-    GET_TAGS
-} from './queries';
-import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations';
+    GET_TAGS,
+    GET_TRENDING_TAGS,
+    GET_NOTIFICATIONS_COUNT,
+    GET_PROFILE_BY_ID,
+    GET_PROFILE_FEED
+} from './queries.js';
+
+import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations.js';
 import fetch from 'cross-fetch';
 
-const API_URL = 'https://api-mumbai.lens.dev'
-//const API_URL = 'https://api.lens.dev'
+//const API_URL = 'https://api-mumbai.lens.dev'
+const API_URL = 'https://api.lens.dev'
 
 // `httpLink` our gateway to the Lens GraphQL API. It lets us request for data from the API and passes it forward
 const httpLink = new HttpLink({ uri: API_URL, fetch });
@@ -25,7 +30,7 @@ const client = new ApolloClient({
 // QUERIES
 
 const getProfile = async (handle) => {
-    try {
+    //try {
         const { data } = await client.query({
             query: QUERY_PROFILE_BY_ID,
             variables: {
@@ -33,15 +38,37 @@ const getProfile = async (handle) => {
             }
         });
         return data;
+    //} catch (error) {
+    //    console.log(error);
+    //    return null;
+    //}
+};
+const getProfileById = async (id) => {
+    try {
+        const { data } = await client.query({
+            query: GET_PROFILE_BY_ID,
+            variables: {
+                profileRequest: { profileId: id }
+            }
+        });
+        return data;
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         return null;
     }
 };
 
-const getPublications = async () => {
+const getPublications = async (query,type) => {
     const { data } = await client.query({
         query: GET_PUBLICATIONS_QUERY,
+        variables: {
+            request: { 
+                sortCriteria: query,
+                publicationTypes: type,
+                limit: 50 
+            }
+        },
+        fetchPolicy: 'network-only',
     });
     return data.explorePublications.items;
 };
@@ -71,6 +98,62 @@ const hasTxHashBeenIndexed = async (request, options = {}) => {
         return null;
     }
 };
+
+const getComments = async (id) => {
+    const { data } = await client.query({
+        query: GET_POST_COMMENTS,
+        variables: {
+            publicationsRequest: { commentsOf: id, limit: 50 }
+        }
+    });
+    return data.publications.items;
+};
+
+const getTags = async (query) => {
+    const { data } = await client.query({
+        query: GET_TAGS,
+        variables: {
+            request: { query: query, type: 'PUBLICATION', limit: 10}
+        }
+    });
+    return data.search.items;
+};
+
+const getTrendingTags = async () => {
+    const { data } = await client.query({
+        query: GET_TRENDING_TAGS,
+        variables: {
+            request: { sort: "MOST_POPULAR", limit: 7}
+        }
+    });
+    const tg = data.allPublicationsTags.items;
+    const tagsArr = [...tg];
+    tagsArr.splice(0,1)
+    return tagsArr;
+};
+
+const getNotificationsCount = async () => {
+    const { data } = await client.query({
+        query: GET_NOTIFICATIONS_COUNT,
+        variables: {
+            request: { profileId: "0x2339"}
+        }
+    });
+    //console.log(data.totalNotifications)
+    return data.totalNotifications;
+};
+
+const getProfileFeed = async (id,type) => {
+        const { data } = await client.query({
+            query: GET_PROFILE_FEED,
+            variables: {
+                publicationsRequest: { profileId: id, publicationTypes: type, limit: 30 }
+            }
+        });
+        //console.log(data.publications.items)
+        return data.publications.items;
+};
+
 
 // MUTATIONS
 
@@ -105,25 +188,7 @@ const createPostTypedData = async (request, options = {}) => {
     }
 }
 
-const getComments = async (id) => {
-    const { data } = await client.query({
-        query: GET_POST_COMMENTS,
-        variables: {
-            publicationsRequest: { commentsOf: id, limit: 10 }
-        }
-    });
-    return data.publications.items;
-};
 
-const getTags = async (query) => {
-    const { data } = await client.query({
-        query: GET_TAGS,
-        variables: {
-            request: { query: query, type: 'PUBLICATION', limit: 10}
-        }
-    });
-    return data.search.items;
-};
 export {
     // QUERIES
     getProfile,
@@ -132,6 +197,10 @@ export {
     getComments,
     hasTxHashBeenIndexed,
     getTags,
+    getTrendingTags,
+    getNotificationsCount,
+    getProfileById,
+    getProfileFeed,
     // MUTATIONS
     refresh,
     createPostTypedData

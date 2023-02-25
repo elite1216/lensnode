@@ -1,24 +1,28 @@
-<% articles.forEach(function (article) { const IPFS_GATEWAY='https://gateway.ipfscdn.io/ipfs/' ; const
-  userHandle=(article.profile.handle)?.replace('.lens', "" ); const userImg=article.profile.picture?.original?.url;
-  const contentMedia=article.metadata?.media; const content=text_truncate(article.metadata?.content, 300); const
-  linkyfyOptions={ truncate: 26, className: 'blink' , nl2br: true, formatHref: { hashtag: (val)=>
-  `/hashtag/${val.substr(1)}`,
-  mention: (val) => `/profile/${val.substr(1)}`
-  }
+<% articles.forEach(function (article) { 
+  const userHandle=(article.profile?.handle)?.replace('.lens', "" ); 
+  const userImg=article.profile.picture?.original?.url;
+  const contentMedia=article.metadata?.media; 
+  const content=truncate(article.metadata?.content, 300, {ellipsis: ' ...'}); 
+  const linkyfyOptions={ 
+    truncate: 26, className: 'blink' , nl2br: true, 
+    formatHref: { 
+      hashtag: (val)=> `/hashtag/${val.substr(1)}`, 
+      mention: (val) => `/profile/${val.substr(1)}`
+    }
   };
-  %>
+%>
   <div class="inner-card-wrapper">
     <div class="card-userPic-wrapper">
       <a href="/profile/<%- userHandle %>">
         <% if(userImg){ %>
-          <img alt="" width="100%" height="49px" src="<%- userImg.replace('ipfs://', IPFS_GATEWAY); %>"
+        <img alt="" width="100%" height="49px" src="<%- userImg.replace('ipfs://', IPFS_GATEWAY); %>"
             class="home_pro_pic" />
-          <%}else{%>
-            <img alt="" width="100%" height="49px" src="https://i.postimg.cc/MZdNmMMN/user.png" class="home_pro_pic" />
-            <%}%>
+        <%}else{%>
+        <img alt="" width="100%" height="49px" src="https://i.postimg.cc/MZdNmMMN/user.png" class="home_pro_pic" />
+        <%}%>
       </a>
     </div>
-    <div class="card-content-wrapper" onclick="window.location.href='/<%-userHandle%>/status/<%-article.id%>'">
+    <div class="card-content-wrapper hov-mice" onclick="window.location.href='/<%-userHandle%>/status/<%-article.id%>'">
       <div class="card-content-header">
         <div class="card-header-detail">
           <span class="card-header-username">
@@ -30,7 +34,7 @@
         </div>
       </div>
       <div class="post-content">
-        <p><%- linkifyHtml(content, linkyfyOptions) %></p>
+        <% if(content){%><p><%- linkifyHtml(content, linkyfyOptions) %></p><% } else {%><p><%- content %></p><% } %>
       </div>
       <% if(contentMedia.length !==0){ let mediaUrl=contentMedia[0].original?.url; if(mediaUrl.includes('ipfs://')){
         mediaUrl=mediaUrl.replace('ipfs://', IPFS_GATEWAY) } else {mediaUrl=mediaUrl} %>

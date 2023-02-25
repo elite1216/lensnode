@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client/core';
+import { gql } from '@apollo/client/core/index.js';
 
 const REFRESH_TOKEN_MUTATION = gql`
   mutation Refresh($request: RefreshRequest!) {

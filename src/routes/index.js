@@ -1,5 +1,5 @@
-import post from './post'
-import main from './main'
+import post from './post.js'
+import main from './main.js'
 
 export default router => {
   post(router)

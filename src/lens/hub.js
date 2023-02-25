@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 import { ethers } from 'ethers';
 import { fileURLToPath } from 'url';
-import { getSigner } from '../services/ethers.service';
+import { getSigner } from '../services/ethers.service.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

@@ -27,7 +27,7 @@ code {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  /*font-family: "Assistant", sans-serif;*/
+  font-family: "Assistant", sans-serif;
   word-break: break-word;
 }
 
@@ -430,8 +430,8 @@ input:focus {
 }
 
 .Top-input-divider {
-  min-height: 2px;
-  height: 2px;
+  min-height: 0.5px;
+  height: 0.5px;
   background-color: #e6ecf0;
   content: "";
 }
@@ -1105,7 +1105,7 @@ input:focus {
 
 .inner-body-wrapper {
   padding: 0 15px;
-  border-bottom: 1px solid #e6ecf0;
+  /*border-bottom: 1px solid #e6ecf0;*/
 }
 
 .middle-header-content {
@@ -1142,12 +1142,14 @@ input:focus {
   margin-bottom: 10px;
   word-break: break-word;
   color: #111;
+  padding: 2px 15px;
+  font-family: "Segoe UI" !important;
 }
-
+.post-content p{font-family: "Segoe UI" !important;}
 .post-link {
-  margin: 15px 0;
+  margin: 10px 15px;
   font-size: 15px;
-  color: #657786;
+  color: rgb(83, 100, 113);
 }
 
 .post-link a {
@@ -1209,7 +1211,7 @@ input:focus {
 .post-image-wrapper {
   overflow: hidden;
   max-height: 730px;
-  margin-top: 10px;
+  margin: 10px 15px 1px 15px;
 }
 
 .post-image-wrapper div {
@@ -1873,7 +1875,7 @@ input:focus {
 .feed-card-header,
 .feed-card-trend {
   border-bottom: 1px solid #e6ecf0;
-  padding: 10px 15px;
+  padding: 10px 17px;
 }
 
 .feed-card-trend {
@@ -1886,22 +1888,21 @@ input:focus {
 }
 
 .feed-card-trend div:first-child {
-  font-size: 15px;
-  color: #14171a;
-  font-weight: 700;
+  font-size: 14px;
+  color: rgb(83, 100, 113);
   padding-top: 2px;
 }
 
 .feed-card-trend div:nth-child(3) {
-  font-size: 15px;
-  color: #14171a;
-  font-weight: 700;
-  padding-top: 2px;
+  font-size: 14px;
+  color: rgb(83, 100, 113);
+  padding-top: 4px;
 }
 
 .feed-card-trend div:nth-child(2) {
-  font-size: 15px;
+  font-size: 16px;
   color: #000;
+  font-weight: 700;
   padding-top: 2px;
 }
 
@@ -4391,6 +4392,7 @@ body.dark_mode .reward_pool {
   font-size: 14px;
   font-weight: 500;
   color: #000;
+  background-color: rgb(239, 243, 244);
 }
 .single_search .search_icon {
   left: 13px;
@@ -4513,3 +4515,6 @@ body.dark_mode .reward_pool {
   margin-bottom: 10px;
   border-bottom: 1px solid #e6ecf0;
 }
+#reply-input{font-family: "Assistant", sans-serif;}
+.jYxAGf{z-index: 999 !important;}
+.hov-mice{cursor: pointer;}

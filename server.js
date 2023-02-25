@@ -9,7 +9,8 @@ import https from "https";
 import fs from "fs";
 import { fileURLToPath } from "url";
 import chalk from 'chalk'
-import routes from "./routes";
+import routes from "./src/routes/index.js";
+import { connections } from './src/utils/userVerify.js'
 
 const router = express.Router()
 
@@ -18,6 +19,9 @@ routes(router)
 const app = express();
 
 app.use(cookieParser())
+app.use(connections.userConnection);
+
+global.IPFS_GATEWAY='https://gateway.ipfscdn.io/ipfs/'; 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,7 +35,7 @@ app.set("views", "./src/views");
 app.set("view engine", "ejs");
 
 app.use("/", router);
-
+/*
 let server;
 let link;
 
@@ -81,4 +85,8 @@ server.on("listening", () => {
   const port = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
 
   console.info(`${chalk.blue(`App listening on port ${port}`)} ${chalk.yellow(link)}`);
+});
+*/
+const server = app.listen(5000, () => {
+  console.log(`Express is running on port ${server.address().port} http://localhost:5000`);
 });

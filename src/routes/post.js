@@ -1,7 +1,7 @@
-import { decodeJWT } from "../utils";
-import { createPost } from '../lens/publications/post'
-import { authenticate } from "../middlewares/authenticate";
-import { parseCookies } from '../utils'
+import { decodeJWT } from "../utils/index.js";
+import { createPost } from '../lens/publications/post.js'
+import { authenticate } from "../middlewares/authenticate.js";
+import { parseCookies } from '../utils/index.js'
 
 export default router => {
   router.get('/post', authenticate, async (req, res) => {

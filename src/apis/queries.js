@@ -15,7 +15,7 @@ import {
   mirrorFieldsFragment,
   commentMirrorOfFieldsFragment
   } 
-from './fragments';
+from './fragments.js';
 
 const QUERY_PROFILE_BY_ID = gql`
   query Profile($profileRequest: SingleProfileQueryRequest!) {
@@ -74,13 +74,66 @@ const QUERY_PROFILE_BY_ID = gql`
   }
 `
 
+const GET_PROFILE_BY_ID = gql`
+  query Profile($profileRequest: SingleProfileQueryRequest!) {
+    profile(request: $profileRequest) {
+      id
+      name
+      metadata
+      handle
+      bio
+      stats {
+        totalFollowers
+        totalFollowing
+        totalPosts
+        totalComments
+        totalMirrors
+        totalPublications
+        totalCollects
+      }
+      picture {
+        ... on NftImage {
+          contractAddress
+          tokenId
+          uri
+          verified
+        }
+        ... on MediaSet {
+          original {
+            url
+            mimeType
+          }
+        }
+        __typename
+      }
+      coverPicture {
+        ... on NftImage {
+          contractAddress
+          tokenId
+          uri
+          verified
+        }
+        ... on MediaSet {
+          original {
+            url
+            mimeType
+          }
+        }
+        __typename
+      }
+      attributes {
+        displayType
+        traitType
+        key
+        value
+      }
+    }
+  }
+`
+
 const GET_PUBLICATIONS_QUERY = gql`
-  query {
-    explorePublications(request: {
-      sortCriteria: LATEST,
-      publicationTypes: [POST],
-      limit: 50
-    }) {
+  query ExplorePublications($request: ExplorePublicationRequest!) {
+    explorePublications(request: $request) {
       items {
         __typename
         ... on Post {
@@ -272,8 +325,62 @@ const GET_TAGS = gql`
   ${collectModuleFragment}
   ${referenceModuleFragment}
 `
+const GET_TRENDING_TAGS = gql`
+  query Trending($request: AllPublicationsTagsRequest!) {
+    allPublicationsTags(request: $request) {
+      items {
+        tag
+        total
+      }
+    }
+  }
+`
+const GET_NOTIFICATIONS_COUNT= gql`
+  query NotificationCount($request: NotificationRequest!) {
+    notifications(request: $request) {
+      pageInfo {
+        totalCount
+      }
+    }
+  }
+`
 
-
+const GET_PROFILE_FEED = gql`
+query Publications($publicationsRequest: PublicationsQueryRequest!) {
+  publications(request: $publicationsRequest) {
+      __typename 
+      items {
+        ... on Post {
+          ...PostFields
+        }
+        ... on Comment {
+          ...CommentFields
+        }
+        ... on Mirror {
+          ...MirrorFields
+        }
+      }
+      pageInfo {
+        totalCount
+        next
+      }
+    }
+  }
+  ${mediaFieldsFragment}
+  ${mirrorFieldsFragment}
+  ${mirrorBaseFieldsFragment}
+  ${profileFieldsFragment}
+  ${publicationStatsFragment}
+  ${metadataOutputFragment}
+  ${postFieldsFragment}
+  ${erc20Fragment}
+  ${commentBaseFieldsFragment}
+  ${commentFieldsFragment}
+  ${commentMirrorOfFieldsFragment}
+  ${followModuleFragment}
+  ${collectModuleFragment}
+  ${referenceModuleFragment}
+`
 
 export {
   QUERY_PROFILE_BY_ID,
@@ -281,5 +388,9 @@ export {
   GET_SINGLE_POST,
   GET_POST_COMMENTS,
   HAS_TX_HASH_BEEN_INDEXED,
-  GET_TAGS
+  GET_TAGS,
+  GET_TRENDING_TAGS,
+  GET_NOTIFICATIONS_COUNT,
+  GET_PROFILE_BY_ID,
+  GET_PROFILE_FEED
 }

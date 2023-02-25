@@ -6,14 +6,13 @@
  * - browser extension: https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn/related?hl=en
  */
 
-// const LENS_API = 'https://api.lens.dev'
-const LENS_API = 'https://api-mumbai.lens.dev'
+const LENS_API = 'https://api.lens.dev'
+//const LENS_API = 'https://api-mumbai.lens.dev'
 
 window.onload = () => {
   setTimeout(() => {
     const Web3Modal = window?.Web3Modal?.default;
     const WalletConnectProvider = window?.WalletConnectProvider?.default;
-    const Fortmatic = window?.Fortmatic;
 
     // Web3modal instance
     let web3Modal
@@ -26,10 +25,10 @@ window.onload = () => {
       // Check that the web page is run in a secure context,
       // as otherwise MetaMask won't be available
       // https://ethereum.stackexchange.com/a/62217/620
-      if (location.protocol !== 'https:') {
-        alert('Run https connection in order for MetaMask to work')
-        return;
-      }
+      //if (location.protocol !== 'https:') {
+      //  alert('Run https connection in order for MetaMask to work')
+      //  return;
+      //}
 
       // Tell Web3modal what providers we have available.
       // Built-in web browser provider (only one can exist as a time)
@@ -42,13 +41,6 @@ window.onload = () => {
             infuraId: "8043bb2cf99347b1bfadfb233c5325c0",
           }
         },
-        fortmatic: {
-          package: Fortmatic,
-          options: {
-            // Mikko's TESTNET api key
-            key: "pk_test_391E26A3B43A3350"
-          }
-        }
       };
 
       web3Modal = new Web3Modal({

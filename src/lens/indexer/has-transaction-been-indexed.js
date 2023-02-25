@@ -1,4 +1,4 @@
-import { hasTxHashBeenIndexed } from '../../apis/apolloClient'
+import { hasTxHashBeenIndexed } from '../../apis/apolloClient.js'
 
 export const pollUntilIndexed = async (input, accessToken) => {
   while (true) {

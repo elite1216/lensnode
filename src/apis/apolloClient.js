@@ -67,7 +67,8 @@ const getPublications = async (query,type) => {
                 publicationTypes: type,
                 limit: 50 
             }
-        }
+        },
+        fetchPolicy: 'network-only',
     });
     return data.explorePublications.items;
 };

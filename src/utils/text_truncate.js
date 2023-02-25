@@ -15,10 +15,4 @@ const text_truncate = function(str, length, ending) {
   }
 }
 
-function getcookie(req) {
-  var cookie = req.headers.cookie;
-  // user=someone; session=QyhYzXhkTZawIb5qSl3KKyPVN (this is my cookie i get)
-  return cookie.split('; ');
-}
-//var cookie = getcookie(req);
 export { text_truncate };

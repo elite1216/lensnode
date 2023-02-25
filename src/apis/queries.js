@@ -345,6 +345,43 @@ const GET_NOTIFICATIONS_COUNT= gql`
   }
 `
 
+const GET_PROFILE_FEED = gql`
+query Publications($publicationsRequest: PublicationsQueryRequest!) {
+  publications(request: $publicationsRequest) {
+      __typename 
+      items {
+        ... on Post {
+          ...PostFields
+        }
+        ... on Comment {
+          ...CommentFields
+        }
+        ... on Mirror {
+          ...MirrorFields
+        }
+      }
+      pageInfo {
+        totalCount
+        next
+      }
+    }
+  }
+  ${mediaFieldsFragment}
+  ${mirrorFieldsFragment}
+  ${mirrorBaseFieldsFragment}
+  ${profileFieldsFragment}
+  ${publicationStatsFragment}
+  ${metadataOutputFragment}
+  ${postFieldsFragment}
+  ${erc20Fragment}
+  ${commentBaseFieldsFragment}
+  ${commentFieldsFragment}
+  ${commentMirrorOfFieldsFragment}
+  ${followModuleFragment}
+  ${collectModuleFragment}
+  ${referenceModuleFragment}
+`
+
 export {
   QUERY_PROFILE_BY_ID,
   GET_PUBLICATIONS_QUERY,
@@ -354,5 +391,6 @@ export {
   GET_TAGS,
   GET_TRENDING_TAGS,
   GET_NOTIFICATIONS_COUNT,
-  GET_PROFILE_BY_ID
+  GET_PROFILE_BY_ID,
+  GET_PROFILE_FEED
 }

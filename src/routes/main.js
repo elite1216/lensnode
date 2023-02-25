@@ -2,11 +2,9 @@ import moment from 'moment'
 import linkifyHtml from "linkify-html";
 import 'linkify-plugin-hashtag'
 import 'linkify-plugin-mention'
-import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags, getNotificationsCount } from '../apis/apolloClient.js'
+import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags, getNotificationsCount, getProfileFeed } from '../apis/apolloClient.js'
 import { getCleanedProfile } from '../utils/index.js';
 import truncate from 'truncate';
-import { authenticate } from '../middlewares/authenticate.js';
-import { parseCookies } from '../utils/index.js'
 
 // all you need to do now to protect any route and make use of it inside of ejs part:
 // 1. add "authenticate" as a middleware for your route
@@ -14,9 +12,6 @@ import { parseCookies } from '../utils/index.js'
 
 export default router => {
 	router.get('/', async (req, res) => {
-		//const { cookies: { lensCurrentProfileId, accessToken } } = req
-		//const token = parseCookies(res.get('Set-Cookie'))?.accessToken ?? accessToken
-		//const userId = parseCookies(res.get('Set-Cookie'))?.lensCurrentProfileId ?? lensCurrentProfileId
 		const data = await getPublications("LATEST","POST");
 		const topTags = await getTrendingTags();
 		//const notices = await getNotificationsCount();
@@ -27,9 +22,7 @@ export default router => {
 			moment: moment,
 			linkifyHtml: linkifyHtml,
 			truncate: truncate,
-			topTags: topTags,
-			//userId: userId
-			//connected: true
+			topTags: topTags
 		})
 	});
 
@@ -40,7 +33,16 @@ export default router => {
 		const topTags = await getTrendingTags();
 		if (data && data.profile) {
 			const profileData = getCleanedProfile(data.profile);
-			res.render('profile', { user: profileData, topTags: topTags });
+			const profileFeed =  await getProfileFeed(profileData.id,["POST"]);
+			res.render('profile', 
+			{ 
+				user: profileData, 
+				topTags: topTags, 
+				profileFeed: profileFeed,
+				truncate: truncate,
+				moment: moment,
+				linkifyHtml: linkifyHtml
+			});
 		} else {
 			res.status(404).render('common/404');
 		}

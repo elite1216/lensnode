@@ -8,8 +8,10 @@ import {
     GET_TAGS,
     GET_TRENDING_TAGS,
     GET_NOTIFICATIONS_COUNT,
-    GET_PROFILE_BY_ID
+    GET_PROFILE_BY_ID,
+    GET_PROFILE_FEED
 } from './queries.js';
+
 import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations.js';
 import fetch from 'cross-fetch';
 
@@ -28,7 +30,7 @@ const client = new ApolloClient({
 // QUERIES
 
 const getProfile = async (handle) => {
-    try {
+    //try {
         const { data } = await client.query({
             query: QUERY_PROFILE_BY_ID,
             variables: {
@@ -36,10 +38,10 @@ const getProfile = async (handle) => {
             }
         });
         return data;
-    } catch (error) {
-        console.log(error);
-        return null;
-    }
+    //} catch (error) {
+    //    console.log(error);
+    //    return null;
+    //}
 };
 const getProfileById = async (id) => {
     try {
@@ -51,7 +53,7 @@ const getProfileById = async (id) => {
         });
         return data;
     } catch (error) {
-        console.log(error);
+        //console.log(error);
         return null;
     }
 };
@@ -95,39 +97,6 @@ const hasTxHashBeenIndexed = async (request, options = {}) => {
         return null;
     }
 };
-
-// MUTATIONS
-
-const refresh = async refreshToken => {
-    try {
-        const { data } = await client.mutate({
-            mutation: REFRESH_TOKEN_MUTATION,
-            variables: {
-                request: { refreshToken }
-            }
-        })
-        return data
-    } catch (error) {
-        console.log(error)
-        return null
-    }
-}
-
-const createPostTypedData = async (request, options = {}) => {
-    try {
-        const { data } = await client.mutate({
-            mutation: CREATE_POST_TYPED_DATA,
-            variables: {
-                request
-            },
-            ...options
-        })
-        return data
-    } catch (error) {
-        console.log(error)
-        return null
-    }
-}
 
 const getComments = async (id) => {
     const { data } = await client.query({
@@ -173,6 +142,52 @@ const getNotificationsCount = async () => {
     return data.totalNotifications;
 };
 
+const getProfileFeed = async (id,type) => {
+        const { data } = await client.query({
+            query: GET_PROFILE_FEED,
+            variables: {
+                publicationsRequest: { profileId: id, publicationTypes: type, limit: 30 }
+            }
+        });
+        //console.log(data.publications.items)
+        return data.publications.items;
+};
+
+
+// MUTATIONS
+
+const refresh = async refreshToken => {
+    try {
+        const { data } = await client.mutate({
+            mutation: REFRESH_TOKEN_MUTATION,
+            variables: {
+                request: { refreshToken }
+            }
+        })
+        return data
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+const createPostTypedData = async (request, options = {}) => {
+    try {
+        const { data } = await client.mutate({
+            mutation: CREATE_POST_TYPED_DATA,
+            variables: {
+                request
+            },
+            ...options
+        })
+        return data
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
+
 export {
     // QUERIES
     getProfile,
@@ -184,6 +199,7 @@ export {
     getTrendingTags,
     getNotificationsCount,
     getProfileById,
+    getProfileFeed,
     // MUTATIONS
     refresh,
     createPostTypedData

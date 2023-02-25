@@ -3,7 +3,7 @@
 	<div class="u-avater-out-grid">
 		<div class="profile-user-pic">
             <a href="/profile/<%-locals.userName%>">
-                <% if(locals.userImg){ console.log(locals.userImg) %>
+                <% if(locals.userImg){ %>
 				<img alt="" width="100%" height="49px" src="<%- locals.userImg.replace('ipfs://', IPFS_GATEWAY); %>" class="home_pro_pic" />
 				<%}else{%>
 				<img alt="" width="100%" height="49px" src="https://i.postimg.cc/MZdNmMMN/user.png" class="home_pro_pic" />

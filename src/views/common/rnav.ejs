@@ -10,7 +10,7 @@
   <div class="feed-wrapper">
     <div class="feed-trending-card mt-0">
       <h3 class="feed-card-header">Trending</h3>
-      <% topTags.forEach(function(tags, index) { %>
+      <% locals.topTags.forEach(function(tags, index) { %>
         <a href="/hashtag/<%- tags.tag %>">
           <div class="feed-card-trend">
             <div><%= index + 1 %>· Trending</div>

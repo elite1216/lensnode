@@ -1,5 +1,5 @@
 import { parseCookies } from './index.js'
-import { getProfileById, getRecommendedProfiles } from '../apis/apolloClient.js'
+import { getProfileById, getRecommendedProfiles, getTrendingTags } from '../apis/apolloClient.js'
 
 const connections = {
     userConnection: async function (req, res, next) {
@@ -14,6 +14,15 @@ const connections = {
     
 };
 
+const trendingTags = {
+    tags: async function (req, res, next) {
+        const tTags = await getTrendingTags();
+        res.locals.topTags = tTags;
+        next();
+    },
+    
+};
+ 
 const recommendedProfiles = {
     suggestedProfiles: async function (req, res, next) {
         //const { cookies: { lensCurrentProfileId, accessToken } } = req
@@ -28,5 +37,5 @@ const recommendedProfiles = {
     },
     
 };
-  
-export {connections, recommendedProfiles}
+
+export {connections, recommendedProfiles, trendingTags}

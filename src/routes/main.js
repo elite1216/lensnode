@@ -2,7 +2,7 @@ import moment from 'moment'
 import linkifyHtml from "linkify-html";
 import 'linkify-plugin-hashtag'
 import 'linkify-plugin-mention'
-import { getProfile, getPublications, getPublication, getComments, getTags, getTrendingTags, getNotificationsCount, getProfileFeed } from '../apis/apolloClient.js'
+import { getProfile, getPublications, getPublication, getComments, getTags, getNotificationsCount, getProfileFeed } from '../apis/apolloClient.js'
 import { getCleanedProfile } from '../utils/index.js';
 import truncate from 'truncate';
 
@@ -13,7 +13,6 @@ import truncate from 'truncate';
 export default router => {
 	router.get('/', async (req, res) => {
 		const data = await getPublications("LATEST","POST");
-		const topTags = await getTrendingTags();
 		//const notices = await getNotificationsCount();
 		//console.log(notices)
 
@@ -21,8 +20,7 @@ export default router => {
 			articles: data,
 			moment: moment,
 			linkifyHtml: linkifyHtml,
-			truncate: truncate,
-			topTags: topTags
+			truncate: truncate
 		})
 	});
 
@@ -30,14 +28,12 @@ export default router => {
 		const name = req.params.name;
 		const handleName = `${name}.lens`
 		const data = await getProfile(handleName);
-		const topTags = await getTrendingTags();
 		if (data && data.profile) {
 			const profileData = getCleanedProfile(data.profile);
 			const profileFeed =  await getProfileFeed(profileData.id,["POST"]);
 			res.render('profile', 
 			{ 
-				user: profileData, 
-				topTags: topTags, 
+				user: profileData,
 				profileFeed: profileFeed,
 				truncate: truncate,
 				moment: moment,
@@ -52,20 +48,18 @@ export default router => {
 		const name = req.params.name;
 		const handleName = `${name}.lens`
 		const data = await getProfile(handleName);
-		const topTags = await getTrendingTags();
 		if (data && data.profile) {
 			const profileData = getCleanedProfile(data.profile);
 			const profileReplies =  await getProfileFeed(profileData.id,["COMMENT"]);
 			res.render('profile', 
 			{ 
-				user: profileData, 
-				topTags: topTags, 
+				user: profileData,
 				profileReplies: profileReplies,
 				truncate: truncate,
 				moment: moment,
 				linkifyHtml: linkifyHtml
 			});
-		console.log(profileReplies)
+		//console.log(profileReplies)
 		} else {
 			res.status(404).render('common/404');
 		}
@@ -75,14 +69,12 @@ export default router => {
 	router.get('/hashtag/:name', async (req, res) => {
 		const name = req.params.name;
 		const data = await getTags(name);
-		const topTags = await getTrendingTags();
 		if (data) {
 			res.render('hashtag', { 
 				articles: data,
 				moment: moment,
 				linkifyHtml: linkifyHtml,
-				truncate: truncate,
-				topTags: topTags
+				truncate: truncate
 			});
 		} else {
 			res.status(404).render('common/404');
@@ -94,15 +86,13 @@ export default router => {
 		const link = req.params.link
 		const data = await getPublication(link);
 		const comments = await getComments(link)
-		const topTags = await getTrendingTags();
 		if (data) {
 			res.render('post', {
 				post: data,
 				moment: moment,
 				comments: comments,
 				linkifyHtml: linkifyHtml,
-				truncate: truncate,
-				topTags: topTags
+				truncate: truncate
 			});
 		} else {
 			res.status(404).render('common/404');
@@ -111,13 +101,11 @@ export default router => {
 
 	router.get('/trending', async (req, res) => {
 		const data = await getPublications("TOP_COLLECTED","POST");
-		const topTags = await getTrendingTags();
 		res.render('trending', {
 			articles: data,
 			moment: moment,
 			linkifyHtml: linkifyHtml,
-			truncate: truncate,
-			topTags: topTags
+			truncate: truncate
 		})
 	})
 
@@ -126,13 +114,10 @@ export default router => {
 	})
 
 	router.get('/explore', async (req, res) => {
-		const topTags = await getTrendingTags();
-		//const cont = initWalletConnect();
 		res.render('explore')
 	})
 
 	router.use(async (req, res) => {
-		const topTags = await getTrendingTags();
-		res.status(404).render('common/404',{topTags:topTags});
+		res.status(404).render('common/404');
 	})
 }

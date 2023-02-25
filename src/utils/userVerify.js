@@ -1,17 +1,32 @@
 import { parseCookies } from './index.js'
-import { getProfileById } from '../apis/apolloClient.js'
+import { getProfileById, getRecommendedProfiles } from '../apis/apolloClient.js'
 
 const connections = {
     userConnection: async function (req, res, next) {
         const { cookies: { lensCurrentProfileId, accessToken } } = req
         const userId = parseCookies(res.get('Set-Cookie'))?.lensCurrentProfileId ?? lensCurrentProfileId
-        const userDetails = await getProfileById(userId);
         res.locals.userId = userId;
+        const userDetails = await getProfileById(userId);
         res.locals.userName = userDetails?.profile?.handle?.replace('.lens', "" );
-        res.locals.userImg = userDetails?.profile?.picture?.original?.url;;
+        res.locals.userImg = userDetails?.profile?.picture?.original?.url;
         next();
     },
     
-  };
+};
 
-  export {connections}
+const recommendedProfiles = {
+    suggestedProfiles: async function (req, res, next) {
+        //const { cookies: { lensCurrentProfileId, accessToken } } = req
+        //const userId = parseCookies(res.get('Set-Cookie'))?.lensCurrentProfileId ?? lensCurrentProfileId
+        const profileSuggestion = await getRecommendedProfiles();
+        res.locals.profilesToFollow = profileSuggestion;
+        //res.locals.userId = userId;
+        //res.locals.userName = userDetails?.profile?.handle?.replace('.lens', "" );
+        //res.locals.userImg = userDetails?.profile?.picture?.original?.url;
+        
+        next();
+    },
+    
+};
+  
+export {connections, recommendedProfiles}

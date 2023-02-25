@@ -9,7 +9,8 @@ import {
     GET_TRENDING_TAGS,
     GET_NOTIFICATIONS_COUNT,
     GET_PROFILE_BY_ID,
-    GET_PROFILE_FEED
+    GET_PROFILE_FEED,
+    RecommendedProfiles
 } from './queries.js';
 
 import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations.js';
@@ -144,16 +145,26 @@ const getNotificationsCount = async () => {
 };
 
 const getProfileFeed = async (id,type) => {
-        const { data } = await client.query({
-            query: GET_PROFILE_FEED,
-            variables: {
-                publicationsRequest: { profileId: id, publicationTypes: type, limit: 30 }
-            }
-        });
-        //console.log(data.publications.items)
-        return data.publications.items;
+    const { data } = await client.query({
+        query: GET_PROFILE_FEED,
+        variables: {
+            publicationsRequest: { profileId: id, publicationTypes: type, limit: 30 }
+        }
+    });
+    //console.log(data.publications.items)
+    return data.publications.items;
 };
 
+const getRecommendedProfiles = async () => {
+    const { data } = await client.query({
+        query: RecommendedProfiles,
+        variables: {
+            options: { shuffle: true } 
+        }
+    });
+    //console.log(data?.recommendedProfiles.length)
+    return data?.recommendedProfiles?.slice(0,5);
+};
 
 // MUTATIONS
 
@@ -201,6 +212,7 @@ export {
     getNotificationsCount,
     getProfileById,
     getProfileFeed,
+    getRecommendedProfiles,
     // MUTATIONS
     refresh,
     createPostTypedData

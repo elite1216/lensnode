@@ -48,6 +48,30 @@ export default router => {
 		}
 	})
 
+	router.get('/profile/:name/replies', async (req, res) => {
+		const name = req.params.name;
+		const handleName = `${name}.lens`
+		const data = await getProfile(handleName);
+		const topTags = await getTrendingTags();
+		if (data && data.profile) {
+			const profileData = getCleanedProfile(data.profile);
+			const profileReplies =  await getProfileFeed(profileData.id,["COMMENT"]);
+			res.render('profile', 
+			{ 
+				user: profileData, 
+				topTags: topTags, 
+				profileReplies: profileReplies,
+				truncate: truncate,
+				moment: moment,
+				linkifyHtml: linkifyHtml
+			});
+		console.log(profileReplies)
+		} else {
+			res.status(404).render('common/404');
+		}
+	})
+
+
 	router.get('/hashtag/:name', async (req, res) => {
 		const name = req.params.name;
 		const data = await getTags(name);

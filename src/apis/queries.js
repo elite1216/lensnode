@@ -381,6 +381,17 @@ query Publications($publicationsRequest: PublicationsQueryRequest!) {
   ${collectModuleFragment}
   ${referenceModuleFragment}
 `
+const RecommendedProfiles = gql`
+query RecommendedProfiles($options: RecommendedProfileOptions) {
+  recommendedProfiles(options: $options) {
+    ...ProfileFields
+    isFollowedByMe
+  }
+}
+${mediaFieldsFragment}
+${profileFieldsFragment}
+${followModuleFragment}
+`
 
 export {
   QUERY_PROFILE_BY_ID,
@@ -392,5 +403,6 @@ export {
   GET_TRENDING_TAGS,
   GET_NOTIFICATIONS_COUNT,
   GET_PROFILE_BY_ID,
-  GET_PROFILE_FEED
+  GET_PROFILE_FEED,
+  RecommendedProfiles
 }

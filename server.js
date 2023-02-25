@@ -10,7 +10,7 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 import chalk from 'chalk'
 import routes from "./src/routes/index.js";
-import { connections } from './src/utils/userVerify.js'
+import { connections, recommendedProfiles } from './src/utils/userVerify.js'
 
 const router = express.Router()
 
@@ -20,6 +20,7 @@ const app = express();
 
 app.use(cookieParser())
 app.use(connections.userConnection);
+app.use(recommendedProfiles.suggestedProfiles)
 
 global.IPFS_GATEWAY='https://gateway.ipfscdn.io/ipfs/'; 
 

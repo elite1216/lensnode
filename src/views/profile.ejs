@@ -82,15 +82,13 @@
                         </div>
                     </div>
                     <div class="profile-nav-menu">
-                        <div class="profile-nav-item activeTab posts_tab">Posts</div>
-                        <div class="profile-nav-item replies_tab">Replies</div>
-                        <div class="profile-nav-item media_tab">Media</div>
-                        <div class="profile-nav-item collected_tab">Collected</div>
+                        <div class="profile-nav-item activeTab " onclick="loadTab('post')" id="post">Posts</div>
+                        <div class="profile-nav-item " id="replies" onclick="loadTab('replies')" >Replies</div>
+                        <div class="profile-nav-item " id="media" onclick="loadTab('media')">Media</div>
+                        <div class="profile-nav-item "id="collected"  onclick="loadTab('collected')">Collected</div>
                     </div>
-                    <div id="profile_posts"><%- //include('./common/home.ejs', {articles: profileFeed}) %></div>
-                    <div id="profile_likes"><%- //include('./common/profileReplies.ejs') %></div>
-                    <div id="profile_posts"><%- //include('./common/home.ejs', {articles: profileMedia}) %></div>
-                    <div id="profile_posts"><%- include('./common/home.ejs', {articles: profileCollects}) %></div>
+                    <div id="profile_posts"><%- include('./common/home.ejs', {articles: profileFeed}) %></div>
+            
                 </div>
             </div>
             <%- include('./common/rnav') %>
@@ -145,4 +143,56 @@
         </div>
     </div>
 </div>
+
+<script>
+    function loadTab(item){
+   
+    if(item=='replies'){
+        
+        document.getElementById('profile_posts').innerHTML=`<%- include('./common/profileReplies.ejs') %>`;
+        document.getElementById("replies").classList.add("activeTab");
+        document.getElementById("post").classList.remove("activeTab");
+        document.getElementById("media").classList.remove("activeTab");
+        document.getElementById("collected").classList.remove("activeTab");
+     
+
+
+
+    }
+    if(item=='post'){
+        
+        document.getElementById('profile_posts').innerHTML= `<%- include('./common/home.ejs', {articles: profileFeed}) %>`;
+        document.getElementById("replies").classList.remove("activeTab");
+        document.getElementById("post").classList.add("activeTab");
+        document.getElementById("media").classList.remove("activeTab");
+        document.getElementById("collected").classList.remove("activeTab");
+     
+
+
+    }
+    if(item=='media'){
+        
+        document.getElementById('profile_posts').innerHTML= `<%- include('./common/home.ejs', {articles: profileMedia}) %>`;
+        document.getElementById("replies").classList.remove("activeTab");
+        document.getElementById("post").classList.remove("activeTab");
+        document.getElementById("media").classList.add("activeTab");
+        document.getElementById("collected").classList.remove("activeTab");
+     
+
+
+    }
+    if(item=='collected'){
+        
+        document.getElementById('profile_posts').innerHTML= `<%- include('./common/home.ejs', {articles: profileCollects}) %>`;
+        document.getElementById("replies").classList.remove("activeTab");
+        document.getElementById("post").classList.remove("activeTab");
+        document.getElementById("media").classList.remove("activeTab");
+        document.getElementById("collected").classList.add("activeTab");
+     
+
+
+    }
+
+}
+</script>
 <%- include('./common/footer') %>

@@ -10,11 +10,15 @@ import {
     GET_NOTIFICATIONS_COUNT,
     GET_PROFILE_BY_ID,
     GET_PROFILE_FEED,
-    RecommendedProfiles
+    RecommendedProfiles,
+    GET_NOTIFICATIONS
 } from './queries.js';
 
 import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations.js';
+
 import fetch from 'cross-fetch';
+//import { utc } from 'moment/moment.js';
+import { utils } from 'ethers';
 
 //const API_URL = 'https://api-mumbai.lens.dev'
 const API_URL = 'https://api.lens.dev'
@@ -152,11 +156,11 @@ const getTrendingTags = async () => {
     return tagsArr;
 };
 
-const getNotificationsCount = async (accessToken) => {
+const getNotificationsCount = async (id,accessToken) => {
     const { data } = await client.query({
         query: GET_NOTIFICATIONS_COUNT,
         variables: {
-            request: { profileId: "0x2339"}
+            request: { profileId: id}
         },
         context: {
           headers: {
@@ -167,6 +171,23 @@ const getNotificationsCount = async (accessToken) => {
     console.log(data)
     return data;
 };
+
+const getNotifications = async (id,type,accessToken) => {
+    const { data } = await client.query({
+        query: GET_NOTIFICATIONS,
+        variables: {
+            request: { profileId: id, notificationTypes: type, limit: 20}
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+    });
+    console.log(data.notifications.items)
+    return data.notifications.items;
+};
+
 const getProfileCollects = async (id) => {
     const { data } = await client.query({
         query: GET_PROFILE_FEED,

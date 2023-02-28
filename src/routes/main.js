@@ -6,7 +6,7 @@ import { getProfile, getPublications, getPublication, getComments, getTags, getN
 import { getCleanedProfile } from '../utils/index.js';
 import truncate from 'truncate';
 import {authenticate} from '../middlewares/authenticate.js'
-
+import {allNotifications, NotificationTypes} from '../utils/functions.js';
 import { parseCookies } from '../utils/index.js'
 import { decodeJWT } from "../utils/index.js";
 // all you need to do now to protect any route and make use of it inside of ejs part:
@@ -97,9 +97,9 @@ export default router => {
 	router.get('/notifications', authenticate, async (req, res) => {
 		const { cookies: { lensCurrentProfileId, accessToken } } = req
     	const token = parseCookies(res.get('Set-Cookie'))?.accessToken ?? accessToken
-		//const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjB4NzMwRjhCNzJhMGU2ODYyQzBDNmQ3NzdGQTE2NDA1ZTBDRGYxMzgyQyIsInJvbGUiOiJub3JtYWwiLCJpYXQiOjE2Nzc1MjY5NDYsImV4cCI6MTY3NzUyODc0Nn0.2DlTQ_fuXZnZ_IHR9ikpAZw7IxIVjtZzKZQ0EgDojmw";
 		console.log(token)
-		const notices = await getNotificationsCount(token);
+		//console.log(token)
+		//const notices = await getNotificationsCount(token);
 		//console.log(notices)
 		res.render('notifications')
 	})
@@ -109,7 +109,7 @@ export default router => {
 		const exploreImages = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["IMAGE"]);
 		const exploreVideo = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["VIDEO"]);
 		const exploreAudio = await explorePublications("TOP_COMMENTED",["POST"],["AUDIO"]);
-		console.log(exploreAudio)
+		//console.log(exploreAudio)
 		res.render('explore', {
 			articles: data,
 			exploreImages: exploreImages,

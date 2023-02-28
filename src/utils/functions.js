@@ -1,6 +1,8 @@
 import { parseCookies } from './index.js'
 import { getProfileById, getRecommendedProfiles, getTrendingTags } from '../apis/apolloClient.js'
+import axios from 'axios';
 
+const IPFS_GATEWAY='https://gateway.ipfscdn.io/ipfs/';
 const connections = {
     userConnection: async function (req, res, next) {
         const { cookies: { lensCurrentProfileId, accessToken } } = req
@@ -37,5 +39,22 @@ const recommendedProfiles = {
     },
     
 };
+
+function cleanChainURI(str) {
+    const uri = str.split('/').pop();
+    const isArweaveHash = uri?.length === 43;
+    const isIPFSHash = uri?.length === 46 || uri?.length === 59;
+    let uris;
+    if(isIPFSHash)
+    {
+        uris = uri.replace(uri, IPFS_GATEWAY + uri)
+    } 
+    else if(isArweaveHash)
+    {
+        uris = uri.replace(uri, `https://arweave.net/` + uri)
+    } else { uris = uri}
+
+    return uris
+}
 
 export {connections, recommendedProfiles, trendingTags}

@@ -330,6 +330,7 @@ window.onload = () => {
         // we can store current profile id
         if (currentProfile?.id) {
           document.cookie = `lensCurrentProfileId=${currentProfile.id}`
+          location.reload();
         }
       } else {
         triggerModalById('#lens-claim-modal')

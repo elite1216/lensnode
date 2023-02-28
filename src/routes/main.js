@@ -1,11 +1,14 @@
-import moment from 'moment'
+import moment from 'moment';
 import linkifyHtml from "linkify-html";
 import 'linkify-plugin-hashtag'
 import 'linkify-plugin-mention'
-import { getProfile, getPublications, getPublication, getComments, getTags, getNotificationsCount, getProfileFeed } from '../apis/apolloClient.js'
+import { getProfile, getPublications, getPublication, getComments, getTags, getNotificationsCount, getProfileFeed, getProfileCollects, explorePublications } from '../apis/apolloClient.js'
 import { getCleanedProfile } from '../utils/index.js';
 import truncate from 'truncate';
+import {authenticate} from '../middlewares/authenticate.js'
 
+import { parseCookies } from '../utils/index.js'
+import { decodeJWT } from "../utils/index.js";
 // all you need to do now to protect any route and make use of it inside of ejs part:
 // 1. add "authenticate" as a middleware for your route
 // 2. add "connected: true" to "res.render" options
@@ -13,9 +16,6 @@ import truncate from 'truncate';
 export default router => {
 	router.get('/', async (req, res) => {
 		const data = await getPublications("LATEST","POST");
-		//const notices = await getNotificationsCount();
-		//console.log(notices)
-
 		res.render('index', {
 			articles: data,
 			moment: moment,
@@ -31,35 +31,20 @@ export default router => {
 		if (data && data.profile) {
 			const profileData = getCleanedProfile(data.profile);
 			const profileFeed =  await getProfileFeed(profileData.id,["POST"]);
+			const profileReplies =  await getProfileFeed(profileData.id,["COMMENT"]);
+			const profileMedia =  await getProfileFeed(profileData.id,["POST"],["IMAGE","VIDEO","AUDIO"]);
+			const profileCollects =  await getProfileCollects(profileData.ownedBy);
 			res.render('profile', 
 			{ 
 				user: profileData,
 				profileFeed: profileFeed,
-				truncate: truncate,
-				moment: moment,
-				linkifyHtml: linkifyHtml
-			});
-		} else {
-			res.status(404).render('common/404');
-		}
-	})
-
-	router.get('/profile/:name/replies', async (req, res) => {
-		const name = req.params.name;
-		const handleName = `${name}.lens`
-		const data = await getProfile(handleName);
-		if (data && data.profile) {
-			const profileData = getCleanedProfile(data.profile);
-			const profileReplies =  await getProfileFeed(profileData.id,["COMMENT"]);
-			res.render('profile', 
-			{ 
-				user: profileData,
 				profileReplies: profileReplies,
+				profileMedia: profileMedia,
+				profileCollects: profileCollects,
 				truncate: truncate,
 				moment: moment,
 				linkifyHtml: linkifyHtml
 			});
-		//console.log(profileReplies)
 		} else {
 			res.status(404).render('common/404');
 		}
@@ -109,12 +94,31 @@ export default router => {
 		})
 	})
 
-	router.get('/notifications', async (req, res) => {
+	router.get('/notifications', authenticate, async (req, res) => {
+		const { cookies: { lensCurrentProfileId, accessToken } } = req
+    	const token = parseCookies(res.get('Set-Cookie'))?.accessToken ?? accessToken
+		//const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjB4NzMwRjhCNzJhMGU2ODYyQzBDNmQ3NzdGQTE2NDA1ZTBDRGYxMzgyQyIsInJvbGUiOiJub3JtYWwiLCJpYXQiOjE2Nzc1MjY5NDYsImV4cCI6MTY3NzUyODc0Nn0.2DlTQ_fuXZnZ_IHR9ikpAZw7IxIVjtZzKZQ0EgDojmw";
+		console.log(token)
+		const notices = await getNotificationsCount(token);
+		//console.log(notices)
 		res.render('notifications')
 	})
 
 	router.get('/explore', async (req, res) => {
-		res.render('explore')
+		const data = await explorePublications("TOP_COMMENTED",["POST","MIRROR"]);
+		const exploreImages = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["IMAGE"]);
+		const exploreVideo = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["VIDEO"]);
+		const exploreAudio = await explorePublications("TOP_COMMENTED",["POST"],["AUDIO"]);
+		console.log(exploreAudio)
+		res.render('explore', {
+			articles: data,
+			exploreImages: exploreImages,
+			exploreVideo: exploreVideo,
+			exploreAudio: exploreAudio,
+			moment: moment,
+			linkifyHtml: linkifyHtml,
+			truncate: truncate
+		})
 	})
 
 	router.use(async (req, res) => {

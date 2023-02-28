@@ -10,7 +10,7 @@ import fs from "fs";
 import { fileURLToPath } from "url";
 import chalk from 'chalk'
 import routes from "./src/routes/index.js";
-import { connections, recommendedProfiles, trendingTags } from './src/utils/userVerify.js'
+import { connections, recommendedProfiles, trendingTags } from './src/utils/functions'
 
 const router = express.Router()
 

@@ -25,6 +25,8 @@ const QUERY_PROFILE_BY_ID = gql`
       metadata
       handle
       bio
+      ownedBy
+      isFollowedByMe
       stats {
         totalFollowers
         totalFollowing
@@ -82,6 +84,8 @@ const GET_PROFILE_BY_ID = gql`
       metadata
       handle
       bio
+      ownedBy
+      isFollowedByMe
       stats {
         totalFollowers
         totalFollowing

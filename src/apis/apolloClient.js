@@ -59,14 +59,33 @@ const getProfileById = async (id) => {
     }
 };
 
-const getPublications = async (query,type) => {
+const getPublications = async (query,type,collects) => {
     const { data } = await client.query({
         query: GET_PUBLICATIONS_QUERY,
         variables: {
             request: { 
                 sortCriteria: query,
                 publicationTypes: type,
-                limit: 50 
+                limit: 50,
+                collectedBy: collects
+            }
+        },
+        fetchPolicy: 'network-only',
+    });
+    return data.explorePublications.items;
+};
+
+const explorePublications = async (query,type,pubFocus) => {
+    const { data } = await client.query({
+        query: GET_PUBLICATIONS_QUERY,
+        variables: {
+            request: { 
+                sortCriteria: query,
+                publicationTypes: type,
+                limit: 50,
+                metadata: {
+                    mainContentFocus: pubFocus
+                }
             }
         },
         fetchPolicy: 'network-only',
@@ -133,22 +152,46 @@ const getTrendingTags = async () => {
     return tagsArr;
 };
 
-const getNotificationsCount = async () => {
+const getNotificationsCount = async (accessToken) => {
     const { data } = await client.query({
         query: GET_NOTIFICATIONS_COUNT,
         variables: {
             request: { profileId: "0x2339"}
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
         }
     });
-    //console.log(data.totalNotifications)
-    return data.totalNotifications;
+    console.log(data)
+    return data;
 };
-
-const getProfileFeed = async (id,type) => {
+const getProfileCollects = async (id) => {
     const { data } = await client.query({
         query: GET_PROFILE_FEED,
         variables: {
-            publicationsRequest: { profileId: id, publicationTypes: type, limit: 30 }
+            publicationsRequest: 
+            { 
+                publicationTypes: ["POST", "COMMENT"], collectedBy: id, limit: 30
+            }
+        }
+    });
+    //console.log(data.publications.items)
+    return data.publications.items;
+};
+
+const getProfileFeed = async (id,type,pubFocus,collected) => {
+    const { data } = await client.query({
+        query: GET_PROFILE_FEED,
+        variables: {
+            publicationsRequest: 
+            { 
+                profileId: id, publicationTypes: type, limit: 30,
+                metadata: {
+                    mainContentFocus: pubFocus
+                }
+            }
         }
     });
     //console.log(data.publications.items)
@@ -213,6 +256,8 @@ export {
     getProfileById,
     getProfileFeed,
     getRecommendedProfiles,
+    getProfileCollects,
+    explorePublications,
     // MUTATIONS
     refresh,
     createPostTypedData

@@ -86,10 +86,11 @@
                         <div class="profile-nav-item replies_tab">Replies</div>
                         <div class="profile-nav-item media_tab">Media</div>
                         <div class="profile-nav-item collected_tab">Collected</div>
-                        <div class="profile-nav-item nftsposts_tab">NFTs</div>
                     </div>
-                    <div id="profile_posts"><%- include('./common/home.ejs', {articles: profileFeed}) %></div>
-                   <!--<div id="profile_likes"><%- //include('./common/likes.ejs') %></div>-->
+                    <div id="profile_posts"><%- //include('./common/home.ejs', {articles: profileFeed}) %></div>
+                    <div id="profile_likes"><%- //include('./common/profileReplies.ejs') %></div>
+                    <div id="profile_posts"><%- //include('./common/home.ejs', {articles: profileMedia}) %></div>
+                    <div id="profile_posts"><%- include('./common/home.ejs', {articles: profileCollects}) %></div>
                 </div>
             </div>
             <%- include('./common/rnav') %>

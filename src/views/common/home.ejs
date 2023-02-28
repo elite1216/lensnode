@@ -1,8 +1,8 @@
 <% articles.forEach(function (article) { 
-  const userHandle=(article.profile?.handle)?.replace('.lens', "" ); 
-  const userImg=article.profile.picture?.original?.url;
-  const contentMedia=article.metadata?.media; 
-  const content=truncate(article.metadata?.content, 300, {ellipsis: ' ...'}); 
+  const userHandle=(article?.profile?.handle)?.replace('.lens', "" ); 
+  const userImg=article?.profile?.picture?.original?.url;
+  const contentMedia=article?.metadata?.media; 
+  const content=truncate(article?.metadata?.content, 300, {ellipsis: ' ...'}); 
   const linkyfyOptions={ 
     truncate: 26, className: 'blink' , nl2br: true, 
     formatHref: { 
@@ -30,14 +30,14 @@
             <a href="/profile/<%-userHandle%>"> @<%- userHandle %></a>
           </span>
           <span class="card-header-dot">·</span>
-          <span class="card-header-date"><%- moment.utc(article.createdAt).fromNow() %></span>
+          <span class="card-header-date"><%- moment.utc(article?.createdAt).fromNow() %></span>
         </div>
       </div>
       <div class="post-content">
         <% if(content){%><p><%- linkifyHtml(content, linkyfyOptions) %></p><% } else {%><p><%- content %></p><% } %>
       </div>
-      <% if(contentMedia.length !==0){ let mediaUrl=contentMedia[0].original?.url; if(mediaUrl.includes('ipfs://')){
-        mediaUrl=mediaUrl.replace('ipfs://', IPFS_GATEWAY) } else {mediaUrl=mediaUrl} %>
+      <% if(contentMedia?.length !==0){ let mediaUrl=contentMedia?.original?.url; if(mediaUrl?.includes('ipfs://')){
+        mediaUrl=mediaUrl?.replace('ipfs://', IPFS_GATEWAY) } else {mediaUrl=mediaUrl} %>
         <div class="card-content-images">
           <a href="/post/">
             <div class="card-image-link">

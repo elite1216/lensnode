@@ -36,10 +36,10 @@
       <div class="post-content">
         <% if(content){%><p><%- linkifyHtml(content, linkyfyOptions) %></p><% } else {%><p><%- content %></p><% } %>
       </div>
-      <% if(contentMedia?.length !==0){ let mediaUrl=contentMedia?.original?.url; if(mediaUrl?.includes('ipfs://')){
+      <% if(contentMedia?.length !==0){ let mediaUrl=contentMedia[0]?.original?.url; if(mediaUrl?.includes('ipfs://')){
         mediaUrl=mediaUrl?.replace('ipfs://', IPFS_GATEWAY) } else {mediaUrl=mediaUrl} %>
         <div class="card-content-images">
-          <a href="/post/">
+          <a href="/status/<%-article.id%>">
             <div class="card-image-link">
               <img alt="" src="<%- mediaUrl %>" />
             </div>

@@ -56,14 +56,6 @@ function cleanChainURI(str) {
 }
 
 
-const NotificationType = {
-    all: 'ALL',
-    mentions: 'MENTIONS',
-    comments: 'COMMENTS',
-    likes: 'LIKES',
-    collects: 'COLLECTS'
-}
-
 const getNotificationType = () => {
     switch (feedType) {
         case NotificationType.All:
@@ -91,5 +83,4 @@ const NotificationTypes =
 }
 const allNotifications = ["MENTION_POST", "MENTION_COMMENT", "FOLLOWED", "COMMENTED_POST", "COMMENTED_COMMENT", "REACTION_POST", "REACTION_COMMENT", "COLLECTED_POST", "COLLECTED_COMMENT"]
 
-console.log(allNotifications)
 export { connections, recommendedProfiles, trendingTags, allNotifications, NotificationTypes }

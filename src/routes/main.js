@@ -2,13 +2,27 @@ import moment from 'moment';
 import linkifyHtml from "linkify-html";
 import 'linkify-plugin-hashtag'
 import 'linkify-plugin-mention'
-import { getProfile, getPublications, getPublication, getComments, getTags, getNotificationsCount, getProfileFeed, getProfileCollects, explorePublications } from '../apis/apolloClient.js'
 import { getCleanedProfile } from '../utils/index.js';
 import truncate from 'truncate';
 import {authenticate} from '../middlewares/authenticate.js'
 import {allNotifications, NotificationTypes} from '../utils/functions.js';
 import { parseCookies } from '../utils/index.js'
 import { decodeJWT } from "../utils/index.js";
+import 
+{ 
+	getProfile, 
+	getPublications, 
+	getPublication, 
+	getComments, 
+	getTags, 
+	getNotificationsCount, 
+	getProfileFeed,
+	getProfileCollects, 
+	explorePublications,
+	getNotifications
+} from '../apis/apolloClient.js'
+import { truncate as truncateETH } from 'truncate-ethereum-address';
+
 // all you need to do now to protect any route and make use of it inside of ejs part:
 // 1. add "authenticate" as a middleware for your route
 // 2. add "connected: true" to "res.render" options
@@ -97,11 +111,20 @@ export default router => {
 	router.get('/notifications', authenticate, async (req, res) => {
 		const { cookies: { lensCurrentProfileId, accessToken } } = req
     	const token = parseCookies(res.get('Set-Cookie'))?.accessToken ?? accessToken
-		console.log(token)
 		//console.log(token)
-		//const notices = await getNotificationsCount(token);
-		//console.log(notices)
-		res.render('notifications')
+		//const notices = await getNotificationsCount(lensCurrentProfileId,token);
+		const likesNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.likesNotifications,token)
+		const collectsNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.collectNotifications,token)
+		console.log(collectsNotices)
+		res.render('notifications',
+		{
+			likesNotices:likesNotices,
+			collectsNotices: collectsNotices,
+			truncate: truncate,
+			linkifyHtml: linkifyHtml,
+			truncateETH: truncateETH,
+			moment: moment
+		})
 	})
 
 	router.get('/explore', async (req, res) => {

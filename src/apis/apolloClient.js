@@ -168,8 +168,8 @@ const getNotificationsCount = async (id,accessToken) => {
           }
         }
     });
-    console.log(data)
-    return data;
+    //console.log(data.notifications)
+    return data.notifications;
 };
 
 const getNotifications = async (id,type,accessToken) => {
@@ -184,7 +184,7 @@ const getNotifications = async (id,type,accessToken) => {
           }
         }
     });
-    console.log(data.notifications.items)
+    //console.log(data.notifications.items)
     return data.notifications.items;
 };
 
@@ -279,6 +279,7 @@ export {
     getRecommendedProfiles,
     getProfileCollects,
     explorePublications,
+    getNotifications,
     // MUTATIONS
     refresh,
     createPostTypedData

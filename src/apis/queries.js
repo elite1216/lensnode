@@ -25,6 +25,8 @@ const QUERY_PROFILE_BY_ID = gql`
       metadata
       handle
       bio
+      ownedBy
+      isFollowedByMe
       stats {
         totalFollowers
         totalFollowing
@@ -82,6 +84,8 @@ const GET_PROFILE_BY_ID = gql`
       metadata
       handle
       bio
+      ownedBy
+      isFollowedByMe
       stats {
         totalFollowers
         totalFollowing
@@ -381,6 +385,171 @@ query Publications($publicationsRequest: PublicationsQueryRequest!) {
   ${collectModuleFragment}
   ${referenceModuleFragment}
 `
+const RecommendedProfiles = gql`
+query RecommendedProfiles($options: RecommendedProfileOptions) {
+  recommendedProfiles(options: $options) {
+    ...ProfileFields
+    isFollowedByMe
+  }
+}
+${mediaFieldsFragment}
+${profileFieldsFragment}
+${followModuleFragment}
+`
+const GET_NOTIFICATIONS = gql`
+  query Notifications($request: NotificationRequest!) {
+    notifications(request: $request) {
+      items {
+        ... on NewFollowerNotification {
+          notificationId
+          wallet {
+            address
+            defaultProfile {
+              ...ProfileFields
+            }
+          }
+          createdAt
+        }
+        ... on NewMentionNotification {
+          notificationId
+          mentionPublication {
+            ... on Post {
+              id
+              profile {
+                ...ProfileFields
+              }
+              metadata {
+                content
+              }
+            }
+            ... on Comment {
+              id
+              profile {
+                ...ProfileFields
+              }
+              metadata {
+                content
+              }
+            }
+          }
+          createdAt
+        }
+        ... on NewReactionNotification {
+          notificationId
+          profile {
+            ...ProfileFields
+          }
+          publication {
+            ... on Post {
+              id
+              metadata {
+                content
+              }
+            }
+            ... on Comment {
+              id
+              metadata {
+                content
+              }
+            }
+            ... on Mirror {
+              id
+              metadata {
+                content
+              }
+            }
+          }
+          createdAt
+        }
+        ... on NewCommentNotification {
+          notificationId
+          profile {
+            ...ProfileFields
+          }
+          comment {
+            id
+            metadata {
+              content
+            }
+            commentOn {
+              ... on Post {
+                id
+              }
+              ... on Comment {
+                id
+              }
+              ... on Mirror {
+                id
+              }
+            }
+          }
+          createdAt
+        }
+        ... on NewMirrorNotification {
+          notificationId
+          profile {
+            ...ProfileFields
+          }
+          publication {
+            ... on Post {
+              id
+              metadata {
+                content
+              }
+            }
+            ... on Comment {
+              id
+              metadata {
+                content
+              }
+            }
+          }
+          createdAt
+        }
+        ... on NewCollectNotification {
+          notificationId
+          wallet {
+            address
+            defaultProfile {
+              ...ProfileFields
+            }
+          }
+          collectedPublication {
+            ... on Post {
+              id
+              metadata {
+                content
+              }
+              collectModule {
+                ...CollectModuleFields
+              }
+            }
+            ... on Comment {
+              id
+              metadata {
+                content
+              }
+              collectModule {
+                ...CollectModuleFields
+              }
+            }
+          }
+          createdAt
+        }
+      }
+      pageInfo {
+        totalCount
+        next
+      }
+    }
+  }
+  ${collectModuleFragment}
+  ${profileFieldsFragment}
+  ${erc20Fragment}
+  ${followModuleFragment}
+  ${mediaFieldsFragment}
+`
+
 
 export {
   QUERY_PROFILE_BY_ID,
@@ -392,5 +561,7 @@ export {
   GET_TRENDING_TAGS,
   GET_NOTIFICATIONS_COUNT,
   GET_PROFILE_BY_ID,
-  GET_PROFILE_FEED
+  GET_PROFILE_FEED,
+  RecommendedProfiles,
+  GET_NOTIFICATIONS
 }

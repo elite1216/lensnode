@@ -13,6 +13,7 @@ fragment ProfileFields on Profile {
   id
   name
   bio
+  ownedBy
   attributes {
     displayType
     traitType
@@ -51,7 +52,6 @@ fragment ProfileFields on Profile {
       }
     }
   }
-  ownedBy
   dispatcher {
     address
   }
@@ -94,6 +94,7 @@ fragment PostFields on Post {
   reaction(request: null)
   mirrors(by: null)
   hasCollectedByMe
+  onChainContentURI
 }
 `
 const mediaFieldsFragment = gql`

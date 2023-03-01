@@ -9,11 +9,16 @@ import {
     GET_TRENDING_TAGS,
     GET_NOTIFICATIONS_COUNT,
     GET_PROFILE_BY_ID,
-    GET_PROFILE_FEED
+    GET_PROFILE_FEED,
+    RecommendedProfiles,
+    GET_NOTIFICATIONS
 } from './queries.js';
 
 import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations.js';
+
 import fetch from 'cross-fetch';
+//import { utc } from 'moment/moment.js';
+import { utils } from 'ethers';
 
 //const API_URL = 'https://api-mumbai.lens.dev'
 const API_URL = 'https://api.lens.dev'
@@ -58,14 +63,33 @@ const getProfileById = async (id) => {
     }
 };
 
-const getPublications = async (query,type) => {
+const getPublications = async (query,type,collects) => {
     const { data } = await client.query({
         query: GET_PUBLICATIONS_QUERY,
         variables: {
             request: { 
                 sortCriteria: query,
                 publicationTypes: type,
-                limit: 50 
+                limit: 50,
+                collectedBy: collects
+            }
+        },
+        fetchPolicy: 'network-only',
+    });
+    return data.explorePublications.items;
+};
+
+const explorePublications = async (query,type,pubFocus) => {
+    const { data } = await client.query({
+        query: GET_PUBLICATIONS_QUERY,
+        variables: {
+            request: { 
+                sortCriteria: query,
+                publicationTypes: type,
+                limit: 50,
+                metadata: {
+                    mainContentFocus: pubFocus
+                }
             }
         },
         fetchPolicy: 'network-only',
@@ -132,28 +156,79 @@ const getTrendingTags = async () => {
     return tagsArr;
 };
 
-const getNotificationsCount = async () => {
+const getNotificationsCount = async (id,accessToken) => {
     const { data } = await client.query({
         query: GET_NOTIFICATIONS_COUNT,
         variables: {
-            request: { profileId: "0x2339"}
+            request: { profileId: id}
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
         }
     });
-    //console.log(data.totalNotifications)
-    return data.totalNotifications;
+    //console.log(data.notifications)
+    return data.notifications;
 };
 
-const getProfileFeed = async (id,type) => {
-        const { data } = await client.query({
-            query: GET_PROFILE_FEED,
-            variables: {
-                publicationsRequest: { profileId: id, publicationTypes: type, limit: 30 }
+const getNotifications = async (id,type,accessToken) => {
+    const { data } = await client.query({
+        query: GET_NOTIFICATIONS,
+        variables: {
+            request: { profileId: id, notificationTypes: type, limit: 20}
+        },
+        context: {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          }
+        }
+    });
+    //console.log(data.notifications.items)
+    return data.notifications.items;
+};
+
+const getProfileCollects = async (id) => {
+    const { data } = await client.query({
+        query: GET_PROFILE_FEED,
+        variables: {
+            publicationsRequest: 
+            { 
+                publicationTypes: ["POST", "COMMENT"], collectedBy: id, limit: 30
             }
-        });
-        //console.log(data.publications.items)
-        return data.publications.items;
+        }
+    });
+    //console.log(data.publications.items)
+    return data.publications.items;
 };
 
+const getProfileFeed = async (id,type,pubFocus,collected) => {
+    const { data } = await client.query({
+        query: GET_PROFILE_FEED,
+        variables: {
+            publicationsRequest: 
+            { 
+                profileId: id, publicationTypes: type, limit: 30,
+                metadata: {
+                    mainContentFocus: pubFocus
+                }
+            }
+        }
+    });
+    //console.log(data.publications.items)
+    return data.publications.items;
+};
+
+const getRecommendedProfiles = async () => {
+    const { data } = await client.query({
+        query: RecommendedProfiles,
+        variables: {
+            options: { shuffle: true } 
+        }
+    });
+    //console.log(data?.recommendedProfiles.length)
+    return data?.recommendedProfiles?.slice(0,5);
+};
 
 // MUTATIONS
 
@@ -201,6 +276,10 @@ export {
     getNotificationsCount,
     getProfileById,
     getProfileFeed,
+    getRecommendedProfiles,
+    getProfileCollects,
+    explorePublications,
+    getNotifications,
     // MUTATIONS
     refresh,
     createPostTypedData

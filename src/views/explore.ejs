@@ -1,0 +1,26 @@
+<%- include('./common/header') %>
+<div id="root">
+  <div class="body-wrap">
+    <main class="main">
+      <div class="middle-section ms-width">
+        <div class="Home-wrapper">
+          <%- include('./common/topnav') %>
+          <div class="explore-nav-menu">
+            <div class="explore-nav-item activeTab">Popular</div>
+            <div class="explore-nav-item">Videos</div>
+            <div class="explore-nav-item">Audios</div>
+            <div class="explore-nav-item">Images</div>
+          </div>
+          <%- //include('./common/home')%>
+          <%- include('./common/home',{articles:exploreImages})%>
+          <%- //include('./common/home',{articles:exploreVideo})%>
+          <%- //include('./common/home',{articles:exploreAudio})%>
+        </div>
+        <div class="loader loader-hidden"></div>
+      </div>
+      <%- include('./common/rnav') %>
+    </main>
+    <%- include('./common/lnav') %>
+  </div>
+</div>
+<%- include('./common/footer') %>

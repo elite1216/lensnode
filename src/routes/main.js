@@ -128,7 +128,7 @@ export default router => {
 	})
 
 	router.get('/explore', async (req, res) => {
-		const data = await explorePublications("TOP_COMMENTED",["POST","MIRROR"]);
+		const data = await explorePublications("TOP_COMMENTED",["POST"]);
 		const exploreImages = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["IMAGE"]);
 		const exploreVideo = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["VIDEO"]);
 		const exploreAudio = await explorePublications("TOP_COMMENTED",["POST"],["AUDIO"]);

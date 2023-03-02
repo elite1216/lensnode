@@ -14,7 +14,7 @@
     const mainPostMedia = mainPost.metadata?.media
   %>
   <div class="inner-card-wrapper" style="border-bottom: none;">
-    <div class="card-userPic-wrapper">
+    <div class="card-userPic-wrapper v-line-between">
       <a href="/profile/<%- postUserHandle %>">
         <% if(postUserImg){ %>
         <img alt="" width="100%" height="49px" src="<%- postUserImg.replace('ipfs://', IPFS_GATEWAY); %>" class="home_pro_pic" />

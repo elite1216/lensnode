@@ -4503,7 +4503,25 @@ body.dark_mode .reward_pool {
   right: 0;
   bottom: 0;
 }
+
+.v-line-between {
+  position: relative;
+}
+.v-line-between::after {
+	content: "";
+	height: calc(100% - 35px);
+	width: 2px;
+	background-color: #e6ecf0;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	top: 52px;
+}
 /* reply-to-post part css end */
+
+
+
+
 .blink {
   color: rgb(29, 155, 240);
 }

@@ -146,79 +146,53 @@
         </div>
     </div>
 </div>
-
 <script>
-    function loadTab(item){
-   
+function loadTab(item){
     if(item=='replies'){
-        
         document.getElementById('profile_posts').classList.add('hided');
         document.getElementById('profile_media').classList.add('hided');
         document.getElementById('profile_collected').classList.add('hided');
         document.getElementById('profile_replies').classList.remove('hided');
         
-
-
-
-        //for Css bar
         document.getElementById("replies").classList.add("activeTab");
         document.getElementById("post").classList.remove("activeTab");
         document.getElementById("media").classList.remove("activeTab");
-        document.getElementById("collected").classList.remove("activeTab");
-     
-
-
+        document.getElementById("collected","post","media").classList.remove("activeTab");
 
     }
     if(item=='post'){
-        
         document.getElementById('profile_posts').classList.remove('hided');
         document.getElementById('profile_media').classList.add('hided');
         document.getElementById('profile_collected').classList.add('hided');
         document.getElementById('profile_replies').classList.add('hided');
 
-        //
         document.getElementById("replies").classList.remove("activeTab");
         document.getElementById("post").classList.add("activeTab");
         document.getElementById("media").classList.remove("activeTab");
         document.getElementById("collected").classList.remove("activeTab");
-     
-
-
     }
     if(item=='media'){
-        
         document.getElementById('profile_posts').classList.add('hided');
         document.getElementById('profile_media').classList.remove('hided');
         document.getElementById('profile_collected').classList.add('hided');
         document.getElementById('profile_replies').classList.add('hided');
 
-        //
         document.getElementById("replies").classList.remove("activeTab");
         document.getElementById("post").classList.remove("activeTab");
         document.getElementById("media").classList.add("activeTab");
         document.getElementById("collected").classList.remove("activeTab");
-     
-
-
     }
     if(item=='collected'){
-        
         document.getElementById('profile_posts').classList.add('hided');
         document.getElementById('profile_media').classList.add('hided');
         document.getElementById('profile_collected').classList.remove('hided');
         document.getElementById('profile_replies').classList.add('hided');
 
-
         document.getElementById("replies").classList.remove("activeTab");
         document.getElementById("post").classList.remove("activeTab");
         document.getElementById("media").classList.remove("activeTab");
         document.getElementById("collected").classList.add("activeTab");
-     
-
-
     }
-
 }
 </script>
 <%- include('./common/footer') %>

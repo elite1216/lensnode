@@ -82,15 +82,16 @@
                         </div>
                     </div>
                     <div class="profile-nav-menu">
-                        <div class="profile-nav-item activeTab posts_tab">Posts</div>
-                        <div class="profile-nav-item replies_tab">Replies</div>
-                        <div class="profile-nav-item media_tab">Media</div>
-                        <div class="profile-nav-item collected_tab">Collected</div>
+                        <div class="profile-nav-item activeTab " onclick="loadTab('post')" id="post">Posts</div>
+                        <div class="profile-nav-item " id="replies" onclick="loadTab('replies')" >Replies</div>
+                        <div class="profile-nav-item " id="media" onclick="loadTab('media')">Media</div>
+                        <div class="profile-nav-item "id="collected"  onclick="loadTab('collected')">Collected</div>
                     </div>
-                    <div id="profile_posts"><%- //include('./common/home.ejs', {articles: profileFeed}) %></div>
-                    <div id="profile_likes"><%- include('./common/profileReplies.ejs') %></div>
-                    <div id="profile_posts"><%- //include('./common/home.ejs', {articles: profileMedia}) %></div>
-                    <div id="profile_posts"><%- //include('./common/home.ejs', {articles: profileCollects}) %></div>
+                    <div id="profile_posts" class=""><%- include('./common/home.ejs', {articles: profileFeed}) %></div>
+                    <div id="profile_replies" class="hided"><%- include('./common/profileReplies.ejs') %></div>
+                    <div id="profile_media" class="hided"><%- include('./common/home.ejs', {articles: profileMedia}) %></div>
+                    <div id="profile_collected" class="hided"><%- include('./common/home.ejs', {articles: profileCollects}) %></div>
+            
                 </div>
             </div>
             <%- include('./common/rnav') %>
@@ -145,4 +146,79 @@
         </div>
     </div>
 </div>
+
+<script>
+    function loadTab(item){
+   
+    if(item=='replies'){
+        
+        document.getElementById('profile_posts').classList.add('hided');
+        document.getElementById('profile_media').classList.add('hided');
+        document.getElementById('profile_collected').classList.add('hided');
+        document.getElementById('profile_replies').classList.remove('hided');
+        
+
+
+
+        //for Css bar
+        document.getElementById("replies").classList.add("activeTab");
+        document.getElementById("post").classList.remove("activeTab");
+        document.getElementById("media").classList.remove("activeTab");
+        document.getElementById("collected").classList.remove("activeTab");
+     
+
+
+
+    }
+    if(item=='post'){
+        
+        document.getElementById('profile_posts').classList.remove('hided');
+        document.getElementById('profile_media').classList.add('hided');
+        document.getElementById('profile_collected').classList.add('hided');
+        document.getElementById('profile_replies').classList.add('hided');
+
+        //
+        document.getElementById("replies").classList.remove("activeTab");
+        document.getElementById("post").classList.add("activeTab");
+        document.getElementById("media").classList.remove("activeTab");
+        document.getElementById("collected").classList.remove("activeTab");
+     
+
+
+    }
+    if(item=='media'){
+        
+        document.getElementById('profile_posts').classList.add('hided');
+        document.getElementById('profile_media').classList.remove('hided');
+        document.getElementById('profile_collected').classList.add('hided');
+        document.getElementById('profile_replies').classList.add('hided');
+
+        //
+        document.getElementById("replies").classList.remove("activeTab");
+        document.getElementById("post").classList.remove("activeTab");
+        document.getElementById("media").classList.add("activeTab");
+        document.getElementById("collected").classList.remove("activeTab");
+     
+
+
+    }
+    if(item=='collected'){
+        
+        document.getElementById('profile_posts').classList.add('hided');
+        document.getElementById('profile_media').classList.add('hided');
+        document.getElementById('profile_collected').classList.remove('hided');
+        document.getElementById('profile_replies').classList.add('hided');
+
+
+        document.getElementById("replies").classList.remove("activeTab");
+        document.getElementById("post").classList.remove("activeTab");
+        document.getElementById("media").classList.remove("activeTab");
+        document.getElementById("collected").classList.add("activeTab");
+     
+
+
+    }
+
+}
+</script>
 <%- include('./common/footer') %>

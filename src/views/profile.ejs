@@ -85,7 +85,7 @@
                         <div class="profile-nav-item activeTab " onclick="loadTab('post')" id="post">Posts</div>
                         <div class="profile-nav-item " id="replies" onclick="loadTab('replies')" >Replies</div>
                         <div class="profile-nav-item " id="media" onclick="loadTab('media')">Media</div>
-                        <div class="profile-nav-item "id="collected"  onclick="loadTab('collected')">Collected</div>
+                        <div class="profile-nav-item " id="collected"  onclick="loadTab('collected')">Collected</div>
                     </div>
                     <div id="profile_posts" class=""><%- include('./common/home.ejs', {articles: profileFeed}) %></div>
                     <div id="profile_replies" class="hided"><%- include('./common/profileReplies.ejs') %></div>
@@ -157,7 +157,7 @@ function loadTab(item){
         document.getElementById("replies").classList.add("activeTab");
         document.getElementById("post").classList.remove("activeTab");
         document.getElementById("media").classList.remove("activeTab");
-        document.getElementById("collected","post","media").classList.remove("activeTab");
+        document.getElementById("collected").classList.remove("activeTab");
 
     }
     if(item=='post'){

@@ -147,7 +147,7 @@ const getTrendingTags = async () => {
     const { data } = await client.query({
         query: GET_TRENDING_TAGS,
         variables: {
-            request: { sort: "MOST_POPULAR", limit: 7}
+            request: { sort: "MOST_POPULAR", limit: 6}
         }
     });
     const tg = data.allPublicationsTags.items;

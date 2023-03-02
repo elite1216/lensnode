@@ -115,11 +115,18 @@ export default router => {
 		//const notices = await getNotificationsCount(lensCurrentProfileId,token);
 		const likesNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.likesNotifications,token)
 		const collectsNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.collectNotifications,token)
-		console.log(collectsNotices)
+		const commentNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.commentNotifications,token)
+		const mentionNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.mentionsNotifications,token)
+		const allNotices = await getNotifications(lensCurrentProfileId,allNotifications,token)
+		//console.log(collectsNotices.__typename)
+		//console.log(allNotices)
 		res.render('notifications',
 		{
 			likesNotices:likesNotices,
 			collectsNotices: collectsNotices,
+			allNotices: allNotices,
+			commentNotices: commentNotices,
+			mentionNotices: mentionNotices,
 			truncate: truncate,
 			linkifyHtml: linkifyHtml,
 			truncateETH: truncateETH,
@@ -129,8 +136,8 @@ export default router => {
 
 	router.get('/explore', async (req, res) => {
 		const data = await explorePublications("TOP_COMMENTED",["POST"]);
-		const exploreImages = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["IMAGE"]);
-		const exploreVideo = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["VIDEO"]);
+		const exploreImages = await explorePublications("TOP_COMMENTED",["POST"],["IMAGE"]);
+		const exploreVideo = await explorePublications("TOP_COMMENTED",["POST"],["VIDEO"]);
 		const exploreAudio = await explorePublications("TOP_COMMENTED",["POST"],["AUDIO"]);
 		//console.log(exploreAudio)
 		res.render('explore', {

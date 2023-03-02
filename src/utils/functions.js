@@ -81,6 +81,6 @@ const NotificationTypes =
     likesNotifications: ["REACTION_POST","REACTION_COMMENT"],
     commentNotifications: ["COMMENTED_POST","COMMENTED_COMMENT"],
 }
-const allNotifications = ["MENTION_POST", "MENTION_COMMENT", "FOLLOWED", "COMMENTED_POST", "COMMENTED_COMMENT", "REACTION_POST", "REACTION_COMMENT", "COLLECTED_POST", "COLLECTED_COMMENT"]
+const allNotifications = ["MENTION_POST", "MENTION_COMMENT", "FOLLOWED", "COMMENTED_POST", "COMMENTED_COMMENT", "REACTION_POST", "REACTION_COMMENT", "COLLECTED_POST", "COLLECTED_COMMENT","MIRRORED_POST","MIRRORED_COMMENT"]
 
 export { connections, recommendedProfiles, trendingTags, allNotifications, NotificationTypes }

@@ -107,6 +107,15 @@ export default router => {
 			truncate: truncate
 		})
 	})
+	router.get('/foryou', async (req, res) => {
+		const data = await getPublications("CURATED_PROFILES","POST");
+		res.render('foryou', {
+			articles: data,
+			moment: moment,
+			linkifyHtml: linkifyHtml,
+			truncate: truncate
+		})
+	})
 
 	router.get('/notifications', authenticate, async (req, res) => {
 		const { cookies: { lensCurrentProfileId, accessToken } } = req

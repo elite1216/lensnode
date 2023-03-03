@@ -5,7 +5,7 @@ import 'linkify-plugin-mention'
 import { getCleanedProfile } from '../utils/index.js';
 import truncate from 'truncate';
 import {authenticate} from '../middlewares/authenticate.js'
-import {allNotifications, NotificationTypes} from '../utils/functions.js';
+import {allNotifications, NotificationTypes, cleanText} from '../utils/functions.js';
 import { parseCookies } from '../utils/index.js'
 import { decodeJWT } from "../utils/index.js";
 import 
@@ -91,6 +91,7 @@ export default router => {
 				moment: moment,
 				comments: comments,
 				linkifyHtml: linkifyHtml,
+				cleanText: cleanText,
 				truncate: truncate
 			});
 		} else {

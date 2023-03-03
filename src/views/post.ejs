@@ -1,12 +1,11 @@
 <%- include('./common/header')%>
 <%
+	console.log(post)
 	const userHandle = (post?.profile?.handle).replace('.lens', "")
 	const userImg = post.profile.picture?.original?.url?.replace('ipfs://', IPFS_GATEWAY);
-	const contentMedia = post.metadata?.media
-	const linkyfyOptions = {truncate: 26,className:'blink',nl2br:true,formatHref: {
-	    hashtag: (val) => `/hashtag/${val.substr(1)}`,
-		mention: (val) => `/profile/${val.substr(1)}`
-	}}
+	const contentMedia = post.metadata?.media;
+	const content = cleanText(post.metadata?.content);
+
 %>
 	<div id="root">
 		<div class="body-wrap">
@@ -69,7 +68,7 @@
 	                            </div>
 	                        </div>
 	                        <div class="post-content">
-	                            <p><%- linkifyHtml(post.metadata?.content, linkyfyOptions) %></p>
+	                            <p><%- content %></p>
 	                        </div>
 	                        <%  if(contentMedia.length !==0){  
 	                            let mediaUrl = contentMedia[0].original?.url;

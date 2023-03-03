@@ -21,7 +21,28 @@
 	                        </div>
 	                        <div class="inner-body-wrapper">
 	                            <div class="post-header-content p_relative">
-	                                <div class="profile-user-pic">
+	                                <div class="profile-user-pic" data-dropDown="dropdown">
+										<div class="dropdownContent">
+											<div class="pf-thumb">
+												<div class="profile-user-pic">
+													<a href="/profile/pagal">
+														<img alt="" src="https://gateway.ipfscdn.io/ipfs/QmU3xmfzG4nQFA3GNh7A7ZgigD2PRaGXHFpqXAskobZpEq" class="home_pro_pic" width="100%" height="49px">
+													</a>
+												</div>
+												<div class="profile-user-wrap user_name">
+													<h5><a href="/profile/pagal"><b>Haroon</b></a></h5>
+													<span>@pagal</span>
+												</div>
+												<button data-postStatus="following">Following</button>
+											</div>
+											<div class="dropdownContent-inner">
+												<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus debitis, eum pariatur eaque illum saepe.</p>
+											</div>
+											<ul class="sm-info">
+												<li><a href="#"><strong>644</strong>Following</a></li>
+												<li><a href="#"><strong>644</strong>Followers</a></li>
+											</ul>
+										</div>
 	                                    <a href="/profile/<%- userHandle %>">
 	                                        <% if(userImg){ %>
 	                                        <img alt="" width="100%" height="49px" src="<%-userImg %>" class="home_pro_pic" />
@@ -64,7 +85,7 @@
 												}
 												})
 												
-											});
+											});	
 									</script>
 	                            </div>
 	                        </div>

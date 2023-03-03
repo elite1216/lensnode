@@ -79,14 +79,14 @@ const NotificationTypes =
 }
 const allNotifications = ["MENTION_POST", "MENTION_COMMENT", "FOLLOWED", "COMMENTED_POST", "COMMENTED_COMMENT", "REACTION_POST", "REACTION_COMMENT", "COLLECTED_POST", "COLLECTED_COMMENT","MIRRORED_POST","MIRRORED_COMMENT"]
 
-const linkyfyOptions = {truncate: 26,className:'blink',nl2br:true,formatHref: {
+const linkyfyOptions = {truncate: 26,className:'blink',nl2br:true, formatHref: {
     hashtag: (val) => `/hashtag/${val.substr(1)}`,
     mention: (val) => `/profile/${val.substr(1)}`
 }}
 const cleanText = function(str) {
     if (str?.length > 0) {
         str = str?.replace(/\[([^\]]+)\]\(([^\)]+)\)/, '<a href="$2" style="color: rgb(29, 155, 240);">$1</a>');
-        str = str?.replace(/^((http|ftp)s?:\/\/|:\/\/)?(www\.)?/, '');
+        //str = str?.replace(/^((http|ftp)s?:\/\/|:\/\/)?(www\.)?/, '');
         str = linkifyHtml(str, linkyfyOptions)
         str = str?.replace(/(<br\s*\/?>){3,}/gi, '<br><br>');
         str = str?.replace('.lens', '')

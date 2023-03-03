@@ -1,6 +1,5 @@
 <%- include('./common/header')%>
 <%
-	console.log(post)
 	const userHandle = (post?.profile?.handle).replace('.lens', "")
 	const userImg = post.profile.picture?.original?.url?.replace('ipfs://', IPFS_GATEWAY);
 	const contentMedia = post.metadata?.media;

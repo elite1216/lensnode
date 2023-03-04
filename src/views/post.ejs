@@ -2,11 +2,9 @@
 <%
 	const userHandle = (post?.profile?.handle).replace('.lens', "")
 	const userImg = post.profile.picture?.original?.url?.replace('ipfs://', IPFS_GATEWAY);
-	const contentMedia = post.metadata?.media
-	const linkyfyOptions = {truncate: 26,className:'blink',nl2br:true,formatHref: {
-	    hashtag: (val) => `/hashtag/${val.substr(1)}`,
-		mention: (val) => `/profile/${val.substr(1)}`
-	}}
+	const contentMedia = post.metadata?.media;
+	const content = cleanText(post.metadata?.content);
+
 %>
 	<div id="root">
 		<div class="body-wrap">
@@ -21,7 +19,28 @@
 	                        </div>
 	                        <div class="inner-body-wrapper">
 	                            <div class="post-header-content p_relative">
-	                                <div class="profile-user-pic">
+	                                <div class="profile-user-pic" data-dropDown="dropdown">
+										<div class="dropdownContent">
+											<div class="pf-thumb">
+												<div class="profile-user-pic">
+													<a href="/profile/pagal">
+														<img alt="" src="https://gateway.ipfscdn.io/ipfs/QmU3xmfzG4nQFA3GNh7A7ZgigD2PRaGXHFpqXAskobZpEq" class="home_pro_pic" width="100%" height="49px">
+													</a>
+												</div>
+												<div class="profile-user-wrap user_name">
+													<h5><a href="/profile/pagal"><b>Haroon</b></a></h5>
+													<span>@pagal</span>
+												</div>
+												<button data-postStatus="following">Following</button>
+											</div>
+											<div class="dropdownContent-inner">
+												<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus debitis, eum pariatur eaque illum saepe.</p>
+											</div>
+											<ul class="sm-info">
+												<li><a href="#"><strong>644</strong>Following</a></li>
+												<li><a href="#"><strong>644</strong>Followers</a></li>
+											</ul>
+										</div>
 	                                    <a href="/profile/<%- userHandle %>">
 	                                        <% if(userImg){ %>
 	                                        <img alt="" width="100%" height="49px" src="<%-userImg %>" class="home_pro_pic" />
@@ -31,7 +50,7 @@
 	                                    </a>
 	                                </div>
 	                                <div class="profile-user-wrap user_name">
-                                        	<h5><a href="/profile/<%- userHandle %>"><b><%- post.profile?.name %></b><%- userHandle %></a></h5>
+                                        	<h5><a href="/profile/<%- userHandle %>"><b><%- post.profile?.name %></b></a></h5>
 											<span>@<%-userHandle %></span>
 	                                </div>
 									<div class="post_header-dropdown-wrap p_absolute drop_down">
@@ -64,12 +83,12 @@
 												}
 												})
 												
-											});
+											});	
 									</script>
 	                            </div>
 	                        </div>
 	                        <div class="post-content">
-	                            <p><%- linkifyHtml(post.metadata?.content, linkyfyOptions) %></p>
+	                            <p><%- content %></p>
 	                        </div>
 	                        <%  if(contentMedia.length !==0){  
 	                            let mediaUrl = contentMedia[0].original?.url;

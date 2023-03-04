@@ -1,6 +1,8 @@
 import { parseCookies } from './index.js'
 import { getProfileById, getRecommendedProfiles, getTrendingTags } from '../apis/apolloClient.js'
-import axios from 'axios';
+import linkifyHtml from "linkify-html";
+import 'linkify-plugin-hashtag'
+import 'linkify-plugin-mention'
 
 const IPFS_GATEWAY = 'https://gateway.ipfscdn.io/ipfs/';
 const connections = {
@@ -27,14 +29,8 @@ const trendingTags = {
 
 const recommendedProfiles = {
     suggestedProfiles: async function (req, res, next) {
-        //const { cookies: { lensCurrentProfileId, accessToken } } = req
-        //const userId = parseCookies(res.get('Set-Cookie'))?.lensCurrentProfileId ?? lensCurrentProfileId
         const profileSuggestion = await getRecommendedProfiles();
         res.locals.profilesToFollow = profileSuggestion;
-        //res.locals.userId = userId;
-        //res.locals.userName = userDetails?.profile?.handle?.replace('.lens', "" );
-        //res.locals.userImg = userDetails?.profile?.picture?.original?.url;
-
         next();
     },
 
@@ -81,6 +77,22 @@ const NotificationTypes =
     likesNotifications: ["REACTION_POST","REACTION_COMMENT"],
     commentNotifications: ["COMMENTED_POST","COMMENTED_COMMENT"],
 }
-const allNotifications = ["MENTION_POST", "MENTION_COMMENT", "FOLLOWED", "COMMENTED_POST", "COMMENTED_COMMENT", "REACTION_POST", "REACTION_COMMENT", "COLLECTED_POST", "COLLECTED_COMMENT"]
+const allNotifications = ["MENTION_POST", "MENTION_COMMENT", "FOLLOWED", "COMMENTED_POST", "COMMENTED_COMMENT", "REACTION_POST", "REACTION_COMMENT", "COLLECTED_POST", "COLLECTED_COMMENT","MIRRORED_POST","MIRRORED_COMMENT"]
 
-export { connections, recommendedProfiles, trendingTags, allNotifications, NotificationTypes }
+const linkyfyOptions = {truncate: 26,className:'blink',nl2br:true, formatHref: {
+    hashtag: (val) => `/hashtag/${val.substr(1)}`,
+    mention: (val) => `/profile/${val.substr(1)}`
+}}
+const cleanText = function(str) {
+    if (str?.length > 0) {
+        str = str?.replace(/\[([^\]]+)\]\(([^\)]+)\)/, '<a href="$2" style="color: rgb(29, 155, 240);">$1</a>');
+        //str = str?.replace(/^((http|ftp)s?:\/\/|:\/\/)?(www\.)?/, '');
+        str = linkifyHtml(str, linkyfyOptions)
+        str = str?.replace(/(<br\s*\/?>){3,}/gi, '<br><br>');
+        str = str?.replace('.lens', '')
+    }
+
+    return str;
+  }
+
+export { connections, recommendedProfiles, trendingTags, allNotifications, NotificationTypes, cleanText }

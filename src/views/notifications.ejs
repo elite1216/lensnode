@@ -7,14 +7,17 @@
                     <%- include('./common/topnav') %>
                     <div class="post-header-wrapper back_sec"><div class="back_btn"><span class="middle-header-content"> Notifications</span></div></div>
                     <div class="explore-nav-menu">
-                        <div class="explore-nav-item activeTab notifications_tab">All</div>
-                        <div class="explore-nav-item mentions_tab">@Mentions</div>
-                        <div class="explore-nav-item comments_tab">Comments</div>
-                        <div class="explore-nav-item likes_tab">Likes</div>
-                        <div class="explore-nav-item collects_tab">Collects</div>
+                        <div class="explore-nav-item activeTab " id="aNotices" onclick="loadTab('aNotices')">All</div>
+                        <div class="explore-nav-item " id="mNotices" onclick="loadTab('mNotices')">@Mentions</div>
+                        <div class="explore-nav-item " id="cNotices" onclick="loadTab('cNotices')">Comments</div>
+                        <div class="explore-nav-item " id="lNotices" onclick="loadTab('lNotices')">Likes</div>
+                        <div class="explore-nav-item " id="clNotices" onclick="loadTab('clNotices')">Collects</div>
                     </div>
-                    <div id="profile_posts"><%- include('./common/userNotifications.ejs',{notices:likesNotices, nType: "likes"}) %></div>
-                    <div id="profile_posts"><%- //include('./common/userNotifications.ejs', {notices:collectsNotices, nType: "collects"}) %></div>
+                    <div id="a_notices" class=""><%- include('./common/userNotifications.ejs', {notices:allNotices}) %></div>
+                    <div id="m_notices" class="hided"><%- include('./common/userNotifications.ejs', {notices:mentionNotices}) %></div> 
+                    <div id="c_notices" class="hided"><%- include('./common/userNotifications.ejs', {notices:commentNotices}) %></div>  
+                    <div id="l_notices" class="hided"><%- include('./common/userNotifications.ejs',{notices:likesNotices}) %></div>
+                    <div id="cl_notices" class="hided"><%- include('./common/userNotifications.ejs', {notices:collectsNotices}) %></div>               
                 </div>
             </div>
             <%- include('./common/rnav') %>
@@ -22,4 +25,74 @@
         <%- include('./common/lnav') %>
     </div>
 </div>
+<script>
+    function loadTab(item){
+        if(item=='mNotices'){
+            document.getElementById('a_notices').classList.add('hided');
+            document.getElementById('c_notices').classList.add('hided');
+            document.getElementById('l_notices').classList.add('hided');
+            document.getElementById('cl_notices').classList.add('hided');
+            document.getElementById('m_notices').classList.remove('hided');
+            
+            document.getElementById("mNotices").classList.add("activeTab");
+            document.getElementById("aNotices").classList.remove("activeTab");
+            document.getElementById("cNotices").classList.remove("activeTab");
+            document.getElementById("lNotices").classList.remove("activeTab");
+            document.getElementById("clNotices").classList.remove("activeTab");
+        }
+        if(item=='cNotices'){
+            document.getElementById('a_notices').classList.add('hided');
+            document.getElementById('m_notices').classList.add('hided');
+            document.getElementById('l_notices').classList.add('hided');
+            document.getElementById('cl_notices').classList.add('hided');
+            document.getElementById('c_notices').classList.remove('hided');
+            
+            document.getElementById("cNotices").classList.add("activeTab");
+            document.getElementById("aNotices").classList.remove("activeTab");
+            document.getElementById("mNotices").classList.remove("activeTab");
+            document.getElementById("lNotices").classList.remove("activeTab");
+            document.getElementById("clNotices").classList.remove("activeTab");
+        }
+        if(item=='lNotices'){
+            document.getElementById('a_notices').classList.add('hided');
+            document.getElementById('m_notices').classList.add('hided');
+            document.getElementById('c_notices').classList.add('hided');
+            document.getElementById('cl_notices').classList.add('hided');
+            document.getElementById('l_notices').classList.remove('hided');
+            
+            document.getElementById("lNotices").classList.add("activeTab");
+            document.getElementById("aNotices").classList.remove("activeTab");
+            document.getElementById("mNotices").classList.remove("activeTab");
+            document.getElementById("clNotices").classList.remove("activeTab");
+            document.getElementById("cNotices").classList.remove("activeTab");
+        }
+        if(item=='clNotices'){
+            document.getElementById('a_notices').classList.add('hided');
+            document.getElementById('m_notices').classList.add('hided');
+            document.getElementById('c_notices').classList.add('hided');
+            document.getElementById('l_notices').classList.add('hided');
+            document.getElementById('cl_notices').classList.remove('hided');
+            
+            document.getElementById("clNotices").classList.add("activeTab");
+            document.getElementById("aNotices").classList.remove("activeTab");
+            document.getElementById("mNotices").classList.remove("activeTab");
+            document.getElementById("lNotices").classList.remove("activeTab");
+            document.getElementById("cNotices").classList.remove("activeTab");
+        }
+        if(item=='aNotices'){
+            document.getElementById('cl_notices').classList.add('hided');
+            document.getElementById('m_notices').classList.add('hided');
+            document.getElementById('c_notices').classList.add('hided');
+            document.getElementById('l_notices').classList.add('hided');
+            document.getElementById('a_notices').classList.remove('hided');
+            
+            document.getElementById("aNotices").classList.add("activeTab");
+            document.getElementById("clNotices").classList.remove("activeTab");
+            document.getElementById("mNotices").classList.remove("activeTab");
+            document.getElementById("lNotices").classList.remove("activeTab");
+            document.getElementById("cNotices").classList.remove("activeTab");
+        }
+
+    }
+    </script>
 <%- include('./common/footer') %>

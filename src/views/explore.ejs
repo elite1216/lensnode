@@ -6,15 +6,15 @@
         <div class="Home-wrapper">
           <%- include('./common/topnav') %>
           <div class="explore-nav-menu">
-            <div class="explore-nav-item activeTab">Popular</div>
-            <div class="explore-nav-item">Videos</div>
-            <div class="explore-nav-item">Audios</div>
-            <div class="explore-nav-item">Images</div>
+            <div class="explore-nav-item activeTab " id="ePopular" onclick="loadTab('ePopular')">Popular</div>
+            <div class="explore-nav-item " id="eVideos" onclick="loadTab('eVideos')">Videos</div>
+            <div class="explore-nav-item " id="eAudios" onclick="loadTab('eAudios')">Audios</div>
+            <div class="explore-nav-item " id="eImages" onclick="loadTab('eImages')">Images</div>
           </div>
-          <%- //include('./common/home')%>
-          <%- include('./common/home',{articles:exploreImages})%>
-          <%- //include('./common/home',{articles:exploreVideo})%>
-          <%- //include('./common/home',{articles:exploreAudio})%>
+          <div id="e_popular" class=""><%- include('./common/home') %></div>
+          <div id="e_videos" class="hided"><%- include('./common/home',{articles:exploreVideo}) %></div>
+          <div id="e_audios" class="hided"><%- include('./common/home',{articles:exploreAudio}) %></div>
+          <div id="e_images" class="hided"><%- include('./common/home',{articles:exploreImages}) %></div>
         </div>
         <div class="loader loader-hidden"></div>
       </div>
@@ -24,3 +24,51 @@
   </div>
 </div>
 <%- include('./common/footer') %>
+<script>
+  function loadTab(item){
+    if(item=='eVideos'){
+        document.getElementById('e_popular').classList.add('hided');
+        document.getElementById('e_images').classList.add('hided');
+        document.getElementById('e_audios').classList.add('hided');
+        document.getElementById('e_videos').classList.remove('hided');
+        
+        document.getElementById("eVideos").classList.add("activeTab");
+        document.getElementById("eAudios").classList.remove("activeTab");
+        document.getElementById("eImages").classList.remove("activeTab");
+        document.getElementById("ePopular").classList.remove("activeTab");
+    }
+    if(item=='eAudios'){
+        document.getElementById('e_popular').classList.add('hided');
+        document.getElementById('e_images').classList.add('hided');
+        document.getElementById('e_videos').classList.add('hided');
+        document.getElementById('e_audios').classList.remove('hided');
+        
+        document.getElementById("eAudios").classList.add("activeTab");
+        document.getElementById("eVideos").classList.remove("activeTab");
+        document.getElementById("eImages").classList.remove("activeTab");
+        document.getElementById("ePopular").classList.remove("activeTab");
+    }
+    if(item=='eImages'){
+        document.getElementById('e_popular').classList.add('hided');
+        document.getElementById('e_audios').classList.add('hided');
+        document.getElementById('e_videos').classList.add('hided');
+        document.getElementById('e_images').classList.remove('hided');
+        
+        document.getElementById("eImages").classList.add("activeTab");
+        document.getElementById("eVideos").classList.remove("activeTab");
+        document.getElementById("eAudios").classList.remove("activeTab");
+        document.getElementById("ePopular").classList.remove("activeTab");
+    }
+    if(item=='ePopular'){
+        document.getElementById('e_images').classList.add('hided');
+        document.getElementById('e_audios').classList.add('hided');
+        document.getElementById('e_videos').classList.add('hided');
+        document.getElementById('e_popular').classList.remove('hided');
+        
+        document.getElementById("ePopular").classList.add("activeTab");
+        document.getElementById("eVideos").classList.remove("activeTab");
+        document.getElementById("eAudios").classList.remove("activeTab");
+        document.getElementById("eImages").classList.remove("activeTab");
+    }
+  }
+</script>

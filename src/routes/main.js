@@ -5,7 +5,7 @@ import 'linkify-plugin-mention'
 import { getCleanedProfile } from '../utils/index.js';
 import truncate from 'truncate';
 import {authenticate} from '../middlewares/authenticate.js'
-import {allNotifications, NotificationTypes} from '../utils/functions.js';
+import {allNotifications, NotificationTypes, cleanText} from '../utils/functions.js';
 import { parseCookies } from '../utils/index.js'
 import { decodeJWT } from "../utils/index.js";
 import 
@@ -91,6 +91,7 @@ export default router => {
 				moment: moment,
 				comments: comments,
 				linkifyHtml: linkifyHtml,
+				cleanText: cleanText,
 				truncate: truncate
 			});
 		} else {
@@ -107,6 +108,15 @@ export default router => {
 			truncate: truncate
 		})
 	})
+	router.get('/foryou', async (req, res) => {
+		const data = await getPublications("CURATED_PROFILES","POST");
+		res.render('foryou', {
+			articles: data,
+			moment: moment,
+			linkifyHtml: linkifyHtml,
+			truncate: truncate
+		})
+	})
 
 	router.get('/notifications', authenticate, async (req, res) => {
 		const { cookies: { lensCurrentProfileId, accessToken } } = req
@@ -115,11 +125,18 @@ export default router => {
 		//const notices = await getNotificationsCount(lensCurrentProfileId,token);
 		const likesNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.likesNotifications,token)
 		const collectsNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.collectNotifications,token)
-		console.log(collectsNotices)
+		const commentNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.commentNotifications,token)
+		const mentionNotices = await getNotifications(lensCurrentProfileId,NotificationTypes.mentionsNotifications,token)
+		const allNotices = await getNotifications(lensCurrentProfileId,allNotifications,token)
+		//console.log(collectsNotices.__typename)
+		//console.log(allNotices)
 		res.render('notifications',
 		{
 			likesNotices:likesNotices,
 			collectsNotices: collectsNotices,
+			allNotices: allNotices,
+			commentNotices: commentNotices,
+			mentionNotices: mentionNotices,
 			truncate: truncate,
 			linkifyHtml: linkifyHtml,
 			truncateETH: truncateETH,
@@ -129,8 +146,8 @@ export default router => {
 
 	router.get('/explore', async (req, res) => {
 		const data = await explorePublications("TOP_COMMENTED",["POST"]);
-		const exploreImages = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["IMAGE"]);
-		const exploreVideo = await explorePublications("TOP_COMMENTED",["POST","MIRROR"],["VIDEO"]);
+		const exploreImages = await explorePublications("TOP_COMMENTED",["POST"],["IMAGE"]);
+		const exploreVideo = await explorePublications("TOP_COMMENTED",["POST"],["VIDEO"]);
 		const exploreAudio = await explorePublications("TOP_COMMENTED",["POST"],["AUDIO"]);
 		//console.log(exploreAudio)
 		res.render('explore', {

@@ -12,7 +12,7 @@ export const getSigner = () => {
     throw new Error('Wallet Private Key variable is missing!')
   }
 
-  return new Wallet(String(process.env.WALLET_PRIVATE_KEY), ETHERS_PROVIDERS);
+  return new Wallet(walletPrivateKey, ETHERS_PROVIDERS);
 };
 
 export const signedTypeData = (

@@ -5,6 +5,7 @@ import { uploadIpfs } from '../../services/ipfs.service.js'
 import { signedTypeData, splitSignature } from '../../services/ethers.service.js';
 import { getLensHub } from '../hub.js';
 import { pollUntilIndexed } from '../indexer/has-transaction-been-indexed.js'
+import { getTagsFromText, getPublicationMainFocusByType } from '../../utils/index.js'
 
 const _signCreatePostTypedData = async (request, accessToken) => {
   const options = {
@@ -24,33 +25,32 @@ const _signCreatePostTypedData = async (request, accessToken) => {
   return { result, signature };
 };
 
-export const createPost = async (postData, { address = '', profileId = '', accessToken = '' }) => {
-  if (!address || !profileId || !accessToken) {
-    throw new Error('Must provide all parameters to run this')
-  }
-
-  const { content, name, externalUrl } = postData
-
-  const ipfsResult = await uploadIpfs({
-    tags: getTagsFromText(content),
+export const createPost = async (
+  { content = '', name = '', image, externalUrl },
+  { address = '', profileId = '', accessToken = '' }
+) => {
+  const ipfsData = {
     content,
     name,
+    image,
+    imageMimeType: image?.mimetype,
+    tags: getTagsFromText(content),
     external_url: externalUrl ?? null,
     version: '2.0.0',
-    mainContentFocus: PUBLICATION_MAIN_FOCUS.TEXT_ONLY,
+    mainContentFocus: getPublicationMainFocusByType(image?.mimetype),
     metadata_id: uuidv4(),
     description: 'Description',
     locale: 'en-US',
     appId: process.env.APP_NAME ?? 'Lensfrens',
     attributes: [],
-    // image: null,
-    // imageMimeType: null,
-  });
+  }
+
+  const ipfsResult = await uploadIpfs(ipfsData);
 
   // const ipfsResult = {
-  // path: 'QmZohMAEA8VzU2BJTxgHcx1SzJSoCfXXRGyshq29jJKRd3',
-  // cid: CID(QmZohMAEA8VzU2BJTxgHcx1SzJSoCfXXRGyshq29jJKRd3),
-  // size: 323
+  //   path: 'QmcVDTNsyosSU3RzzSw1SHTP8t8hpqmij3tqmfvQWtpXgf',
+  //   cid: CID(QmcVDTNsyosSU3RzzSw1SHTP8t8hpqmij3tqmfvQWtpXgf),
+  //   size: 332424
   // }
 
   const createPostRequest = {

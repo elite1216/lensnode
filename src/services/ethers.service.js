@@ -2,7 +2,8 @@ import { ethers, Wallet, utils } from 'ethers';
 import omitDeep from 'omit-deep';
 
 // ethers package must be version "^5.7.2", otherwise it won't work
-const ETHERS_PROVIDERS = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today');
+//const ETHERS_PROVIDERS = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today');
+const ETHERS_PROVIDERS = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com');
 
 export const getSigner = () => {
   const walletPrivateKey = String(process.env.WALLET_PRIVATE_KEY)

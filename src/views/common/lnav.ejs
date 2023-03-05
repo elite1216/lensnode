@@ -4,180 +4,303 @@
 			<div class="Nav">
 				<div class="Nav-Content">
 					<% let notices=0; %>
-					<nav class="Nav-wrapper">
-						<a class="Nav-link nav_sec" href="/" aria-label="home" style="padding-top: 2px;width: 48px;">
-							<div class="Nav-item-hover">
-								<img src="/images/konnekt-logo.png">
-							</div>
-						</a>
-						<a class="Nav-link nav_sec" href="/" aria-label="home" style="padding-top: 4px;">
-							<div class="Nav-item-hover" id="home">
-								<svg width="16px" height="16px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path fill-rule="evenodd" clip-rule="evenodd" d="M8.36 1.37l6.36 5.8-.71.71L13 6.964v6.526l-.5.5h-3l-.5-.5v-3.5H7v3.5l-.5.5h-3l-.5-.5V6.972L2 7.88l-.71-.71 6.35-5.8h.72zM4 6.063v6.927h2v-3.5l.5-.5h3l.5.5v3.5h2V6.057L8 2.43 4 6.063z" /></svg>
-								<div class="Nav-item">Home</div>
-							</div>
-						</a>
-						<% if(locals.userId){ %>
-						<a class="Nav-link" href="/explore" aria-label="explore">
-							<div class="Nav-item-hover" id="explore">
-								<svg viewBox="0 0 24 24"><g><path d="M21 7.337h-3.93l.372-4.272c.036-.412-.27-.775-.682-.812-.417-.03-.776.27-.812.683l-.383 4.4h-6.32l.37-4.27c.037-.413-.27-.776-.68-.813-.42-.03-.777.27-.813.683l-.382 4.4H3.782c-.414 0-.75.337-.75.75s.336.75.75.75H7.61l-.55 6.327H3c-.414 0-.75.336-.75.75s.336.75.75.75h3.93l-.372 4.272c-.036.412.27.775.682.812l.066.003c.385 0 .712-.295.746-.686l.383-4.4h6.32l-.37 4.27c-.036.413.27.776.682.813l.066.003c.385 0 .712-.295.746-.686l.382-4.4h3.957c.413 0 .75-.337.75-.75s-.337-.75-.75-.75H16.39l.55-6.327H21c.414 0 .75-.336.75-.75s-.336-.75-.75-.75zm-6.115 7.826h-6.32l.55-6.326h6.32l-.55 6.326z"></path></g></svg>
-								<div class="Nav-item">Explore</div>
-							</div>
-						</a>
-						<a class="Nav-link" href="/notifications" aria-label="notifications">
-							<div class="Nav-item-hover pos_rel" id="notic" slot="position:relative;">
-								<svg viewBox="0 0 24 24"><g><path d="M21.697 16.468c-.02-.016-2.14-1.64-2.103-6.03.02-2.532-.812-4.782-2.347-6.335C15.872 2.71 14.01 1.94 12.005 1.93h-.013c-2.004.01-3.866.78-5.242 2.174-1.534 1.553-2.368 3.802-2.346 6.334.037 4.33-2.02 5.967-2.102 6.03-.26.193-.366.53-.265.838.102.308.39.515.712.515h4.92c.102 2.31 1.997 4.16 4.33 4.16s4.226-1.85 4.327-4.16h4.922c.322 0 .61-.206.71-.514.103-.307-.003-.645-.263-.838zM12 20.478c-1.505 0-2.73-1.177-2.828-2.658h5.656c-.1 1.48-1.323 2.66-2.828 2.66zM4.38 16.32c.74-1.132 1.548-3.028 1.524-5.896-.018-2.16.644-3.982 1.913-5.267C8.91 4.05 10.397 3.437 12 3.43c1.603.008 3.087.62 4.18 1.728 1.27 1.285 1.933 3.106 1.915 5.267-.024 2.868.785 4.765 1.525 5.896H4.38z"></path></g></svg>
-								<% if(notices && notices> 0) { %><span class="notic"><%- notices %></span><% } %>
-								<div class="Nav-item">Notifications</div>
-							</div>
-						</a>
-						<a class="Nav-link" href="/profile/<%-locals.userName%>" aria-label="messages">
-							<div class="Nav-item-hover" id="messages">
-								<svg viewBox="0 0 48 48"><path d="M0 0h48v48H0z" fill="none"/><g><path d="M8,40h32c2.2,0,4-1.8,4-4V12c0-2.2-1.8-4-4-4H8c-2.2,0-4,1.8-4,4v24C4,38.2,5.8,40,8,40z M39.172,12L24,27.172L8.828,12H39.172z M8,16.828l16,16l16-16V36H8V16.828z"/></g></svg>
-								<div class="Nav-item">Messages</div>
-							</div>
-						</a>
-						<a class="Nav-link" href="/profile/<%-locals.userName%>" aria-label="profile">
-							<div class="Nav-item-hover" id="profile">
-								<svg viewBox="0 0 24 24"><g><path d="M12 11.816c1.355 0 2.872-.15 3.84-1.256.814-.93 1.078-2.368.806-4.392-.38-2.825-2.117-4.512-4.646-4.512S7.734 3.343 7.354 6.17c-.272 2.022-.008 3.46.806 4.39.968 1.107 2.485 1.256 3.84 1.256zM8.84 6.368c.162-1.2.787-3.212 3.16-3.212s2.998 2.013 3.16 3.212c.207 1.55.057 2.627-.45 3.205-.455.52-1.266.743-2.71.743s-2.255-.223-2.71-.743c-.507-.578-.657-1.656-.45-3.205zm11.44 12.868c-.877-3.526-4.282-5.99-8.28-5.99s-7.403 2.464-8.28 5.99c-.172.692-.028 1.4.395 1.94.408.52 1.04.82 1.733.82h12.304c.693 0 1.325-.3 1.733-.82.424-.54.567-1.247.394-1.94zm-1.576 1.016c-.126.16-.316.246-.552.246H5.848c-.235 0-.426-.085-.552-.246-.137-.174-.18-.412-.12-.654.71-2.855 3.517-4.85 6.824-4.85s6.114 1.994 6.824 4.85c.06.242.017.48-.12.654z"></path></g></svg>
-								<div class="Nav-item">Profile</div>
-							</div>
-						</a>
-						<a class="Nav-link" href="" target="_blank">
-							<div class="Nav-item-hover" id="help">
-								<svg viewBox="0 0 32 32"><path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z" /><circle cx="16" cy="23.5" r="1.5" /><path d="M17,8H15.5A4.49,4.49,0,0,0,11,12.5V13h2v-.5A2.5,2.5,0,0,1,15.5,10H17a2.5,2.5,0,0,1,0,5H15v4.5h2V17a4.5,4.5,0,0,0,0-9Z" /></svg>
-								<div class="Nav-item">Help</div>
-							</div>
-						</a>
-						<div id="moremenu" class="Nav-link">
-							<div class="Nav-item-hover">
-								<svg viewBox="0 0 24 24"><g><path d="M16.5 10.25c-.965 0-1.75.787-1.75 1.75s.784 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.786-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.966 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75 1.75-.786 1.75-1.75-.784-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.965 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.787-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75z"></path><path d="M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z"></path></g></svg>
-								<div class="Nav-item">More</div>
-							</div>
-							<div class="more-menu-background" style="display: none;">
-								<div class="more-modal-wrapper">
-									<div class="more-menu-content" style="top: 240px; left: 147px;">
-										<a class="more-menu-item more-item" href="" target="_blank" id="help">
-											<span>Help</span>
-											<span><svg viewBox="0 0 32 32"><path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z" /><circle cx="16" cy="23.5" r="1.5" /><path d="M17,8H15.5A4.49,4.49,0,0,0,11,12.5V13h2v-.5A2.5,2.5,0,0,1,15.5,10H17a2.5,2.5,0,0,1,0,5H15v4.5h2V17a4.5,4.5,0,0,0,0-9Z" /></svg></span>
-										</a>
-										<a class="more-menu-item" href="" target="_blank" aria-label="explorer">
-											<span>Explorer</span><span>'
-												<svg viewBox="0 0 487.95 487.95" style="enable-background:new 0 0 487.95 487.95;" xml:space="preserve"><g><g><path d="M481.8,453l-140-140.1c27.6-33.1,44.2-75.4,44.2-121.6C386,85.9,299.5,0.2,193.1,0.2S0,86,0,191.4s86.5,191.1,192.9,191.1c45.2,0,86.8-15.5,119.8-41.4l140.5,140.5c8.2,8.2,20.4,8.2,28.6,0C490,473.4,490,461.2,481.8,453z M41,191.4c0-82.8,68.2-150.1,151.9-150.1s151.9,67.3,151.9,150.1s-68.2,150.1-151.9,150.1S41,274.1,41,191.4z" /></g></g></svg>
-											</span>
-										</a>
-										<div class="more-menu-item" id="uiModeChange">
-											<span>Display</span>
-											<span>
-												<svg viewBox="0 0 512 512"><g><path fill="currentColor" d="M320 32L304 0l-16 32-32 16 32 16 16 32 16-32 32-16zm138.7 149.3L432 128l-26.7 53.3L352 208l53.3 26.7L432 288l26.7-53.3L512 208z" data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;"></path><path fill="currentColor" d="M332.2 426.4c8.1-1.6 13.9 8 8.6 14.5a191.18 191.18 0 0 1-149 71.1C85.8 512 0 426 0 320c0-120 108.7-210.6 227-188.8 8.2 1.6 10.1 12.6 2.8 16.7a150.3 150.3 0 0 0-76.1 130.8c0 94 85.4 165.4 178.5 147.7z" data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;"></path></g></svg>
-											</span>
-										</div>
-										<div class="more-menu-item more-item" id="logout_btn_inn">Logout</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<% } else {%>
-							<a class="Nav-link" href="/explore" aria-label="explore">
-								<div class="Nav-item-hover" id="explore">
-									<svg viewBox="0 0 24 24"><g><path d="M21 7.337h-3.93l.372-4.272c.036-.412-.27-.775-.682-.812-.417-.03-.776.27-.812.683l-.383 4.4h-6.32l.37-4.27c.037-.413-.27-.776-.68-.813-.42-.03-.777.27-.813.683l-.382 4.4H3.782c-.414 0-.75.337-.75.75s.336.75.75.75H7.61l-.55 6.327H3c-.414 0-.75.336-.75.75s.336.75.75.75h3.93l-.372 4.272c-.036.412.27.775.682.812l.066.003c.385 0 .712-.295.746-.686l.383-4.4h6.32l-.37 4.27c-.036.413.27.776.682.813l.066.003c.385 0 .712-.295.746-.686l.382-4.4h3.957c.413 0 .75-.337.75-.75s-.337-.75-.75-.75H16.39l.55-6.327H21c.414 0 .75-.336.75-.75s-.336-.75-.75-.75zm-6.115 7.826h-6.32l.55-6.326h6.32l-.55 6.326z"></path></g></svg>
-									<div class="Nav-item">Explore</div>
-								</div>
-							</a>
-							<a class="Nav-link" href="" target="_blank" aria-label="help">
-								<div class="Nav-item-hover" id="help">
-									<svg viewBox="0 0 32 32"><path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z" /> <circle cx="16" cy="23.5" r="1.5" /><path d="M17,8H15.5A4.49,4.49,0,0,0,11,12.5V13h2v-.5A2.5,2.5,0,0,1,15.5,10H17a2.5,2.5,0,0,1,0,5H15v4.5h2V17a4.5,4.5,0,0,0,0-9Z" /></svg>
-									<div class="Nav-item">Help</div>
-								</div>
-							</a>
-							<div id="moremenu" class="Nav-link">
+						<nav class="Nav-wrapper">
+							<a class="Nav-link nav_sec" href="/" aria-label="home" style="padding-top: 2px;width: 48px;">
 								<div class="Nav-item-hover">
-									<svg viewBox="0 0 24 24"><g><path d="M16.5 10.25c-.965 0-1.75.787-1.75 1.75s.784 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.786-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.966 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75 1.75-.786 1.75-1.75-.784-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.965 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.787-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75z"></path><path d="M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z"></path></g></svg>
-									<div class="Nav-item">More</div>
+									<img src="/images/konnekt-logo.png">
 								</div>
-								<div class="more-menu-background" style="display: none;">
-									<div class="more-modal-wrapper">
-										<div class="more-menu-content" style="top: 353.65px; left: 147px;">
-											<a class="more-menu-item" href="" target="_blank" aria-label="help">
-												<span>Help</span>
-												<span><svg viewBox="0 0 32 32"><path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z" /><circle cx="16" cy="23.5" r="1.5" /><path d="M17,8H15.5A4.49,4.49,0,0,0,11,12.5V13h2v-.5A2.5,2.5,0,0,1,15.5,10H17a2.5,2.5,0,0,1,0,5H15v4.5h2V17a4.5,4.5,0,0,0,0-9Z" /></svg></span>
-											</a>
-											<a class="more-menu-item" href="" target="_blank">
-												<span>Explorer</span>
-												<span><svg viewBox="0 0 487.95 487.95" style="enable-background:new 0 0 487.95 487.95;" xml:space="preserve"><g><g><path d="M481.8,453l-140-140.1c27.6-33.1,44.2-75.4,44.2-121.6C386,85.9,299.5,0.2,193.1,0.2S0,86,0,191.4s86.5,191.1,192.9,191.1c45.2,0,86.8-15.5,119.8-41.4l140.5,140.5c8.2,8.2,20.4,8.2,28.6,0C490,473.4,490,461.2,481.8,453z M41,191.4c0-82.8,68.2-150.1,151.9-150.1s151.9,67.3,151.9,150.1s-68.2,150.1-151.9,150.1S41,274.1,41,191.4z" /></g></g></svg></span>
-											</a>
-											<div class="more-menu-item" id="uiModeChange"><span>Display</span>
-												<span>
-													<svg viewBox="0 0 512 512"><g><path fill="currentColor" d="M320 32L304 0l-16 32-32 16 32 16 16 32 16-32 32-16zm138.7 149.3L432 128l-26.7 53.3L352 208l53.3 26.7L432 288l26.7-53.3L512 208z" data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;"></path><path fill="currentColor" d="M332.2 426.4c8.1-1.6 13.9 8 8.6 14.5a191.18 191.18 0 0 1-149 71.1C85.8 512 0 426 0 320c0-120 108.7-210.6 227-188.8 8.2 1.6 10.1 12.6 2.8 16.7a150.3 150.3 0 0 0-76.1 130.8c0 94 85.4 165.4 178.5 147.7z" data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;"></path></g></svg>
-												</span>
+							</a>
+							<a class="Nav-link nav_sec" href="/" aria-label="home" style="padding-top: 4px;">
+								<div class="Nav-item-hover" id="home">
+									<svg width="16px" height="16px" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"
+										fill="currentColor">
+										<path fill-rule="evenodd" clip-rule="evenodd"
+											d="M8.36 1.37l6.36 5.8-.71.71L13 6.964v6.526l-.5.5h-3l-.5-.5v-3.5H7v3.5l-.5.5h-3l-.5-.5V6.972L2 7.88l-.71-.71 6.35-5.8h.72zM4 6.063v6.927h2v-3.5l.5-.5h3l.5.5v3.5h2V6.057L8 2.43 4 6.063z" />
+									</svg>
+									<div class="Nav-item">Home</div>
+								</div>
+							</a>
+							<% if(locals.userId){ %>
+								<a class="Nav-link" href="/explore" aria-label="explore">
+									<div class="Nav-item-hover" id="explore">
+										<svg viewBox="0 0 24 24">
+											<g>
+												<path
+													d="M21 7.337h-3.93l.372-4.272c.036-.412-.27-.775-.682-.812-.417-.03-.776.27-.812.683l-.383 4.4h-6.32l.37-4.27c.037-.413-.27-.776-.68-.813-.42-.03-.777.27-.813.683l-.382 4.4H3.782c-.414 0-.75.337-.75.75s.336.75.75.75H7.61l-.55 6.327H3c-.414 0-.75.336-.75.75s.336.75.75.75h3.93l-.372 4.272c-.036.412.27.775.682.812l.066.003c.385 0 .712-.295.746-.686l.383-4.4h6.32l-.37 4.27c-.036.413.27.776.682.813l.066.003c.385 0 .712-.295.746-.686l.382-4.4h3.957c.413 0 .75-.337.75-.75s-.337-.75-.75-.75H16.39l.55-6.327H21c.414 0 .75-.336.75-.75s-.336-.75-.75-.75zm-6.115 7.826h-6.32l.55-6.326h6.32l-.55 6.326z">
+												</path>
+											</g>
+										</svg>
+										<div class="Nav-item">Explore</div>
+									</div>
+								</a>
+								<a class="Nav-link" href="/notifications" aria-label="notifications">
+									<div class="Nav-item-hover pos_rel" id="notic" slot="position:relative;">
+										<svg viewBox="0 0 24 24">
+											<g>
+												<path
+													d="M21.697 16.468c-.02-.016-2.14-1.64-2.103-6.03.02-2.532-.812-4.782-2.347-6.335C15.872 2.71 14.01 1.94 12.005 1.93h-.013c-2.004.01-3.866.78-5.242 2.174-1.534 1.553-2.368 3.802-2.346 6.334.037 4.33-2.02 5.967-2.102 6.03-.26.193-.366.53-.265.838.102.308.39.515.712.515h4.92c.102 2.31 1.997 4.16 4.33 4.16s4.226-1.85 4.327-4.16h4.922c.322 0 .61-.206.71-.514.103-.307-.003-.645-.263-.838zM12 20.478c-1.505 0-2.73-1.177-2.828-2.658h5.656c-.1 1.48-1.323 2.66-2.828 2.66zM4.38 16.32c.74-1.132 1.548-3.028 1.524-5.896-.018-2.16.644-3.982 1.913-5.267C8.91 4.05 10.397 3.437 12 3.43c1.603.008 3.087.62 4.18 1.728 1.27 1.285 1.933 3.106 1.915 5.267-.024 2.868.785 4.765 1.525 5.896H4.38z">
+												</path>
+											</g>
+										</svg>
+										<% if(notices && notices> 0) { %><span class="notic"><%- notices %></span>
+											<% } %>
+												<div class="Nav-item">Notifications</div>
+									</div>
+								</a>
+								<a class="Nav-link" href="/profile/<%-locals.userName%>" aria-label="messages">
+									<div class="Nav-item-hover" id="messages">
+										<svg viewBox="0 0 48 48">
+											<path d="M0 0h48v48H0z" fill="none" />
+											<g>
+												<path
+													d="M8,40h32c2.2,0,4-1.8,4-4V12c0-2.2-1.8-4-4-4H8c-2.2,0-4,1.8-4,4v24C4,38.2,5.8,40,8,40z M39.172,12L24,27.172L8.828,12H39.172z M8,16.828l16,16l16-16V36H8V16.828z" />
+											</g>
+										</svg>
+										<div class="Nav-item">Messages</div>
+									</div>
+								</a>
+								<a class="Nav-link" href="/profile/<%-locals.userName%>" aria-label="profile">
+									<div class="Nav-item-hover" id="profile">
+										<svg viewBox="0 0 24 24">
+											<g>
+												<path
+													d="M12 11.816c1.355 0 2.872-.15 3.84-1.256.814-.93 1.078-2.368.806-4.392-.38-2.825-2.117-4.512-4.646-4.512S7.734 3.343 7.354 6.17c-.272 2.022-.008 3.46.806 4.39.968 1.107 2.485 1.256 3.84 1.256zM8.84 6.368c.162-1.2.787-3.212 3.16-3.212s2.998 2.013 3.16 3.212c.207 1.55.057 2.627-.45 3.205-.455.52-1.266.743-2.71.743s-2.255-.223-2.71-.743c-.507-.578-.657-1.656-.45-3.205zm11.44 12.868c-.877-3.526-4.282-5.99-8.28-5.99s-7.403 2.464-8.28 5.99c-.172.692-.028 1.4.395 1.94.408.52 1.04.82 1.733.82h12.304c.693 0 1.325-.3 1.733-.82.424-.54.567-1.247.394-1.94zm-1.576 1.016c-.126.16-.316.246-.552.246H5.848c-.235 0-.426-.085-.552-.246-.137-.174-.18-.412-.12-.654.71-2.855 3.517-4.85 6.824-4.85s6.114 1.994 6.824 4.85c.06.242.017.48-.12.654z">
+												</path>
+											</g>
+										</svg>
+										<div class="Nav-item">Profile</div>
+									</div>
+								</a>
+								<a class="Nav-link" href="" target="_blank">
+									<div class="Nav-item-hover" id="help">
+										<svg viewBox="0 0 32 32">
+											<path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z" />
+											<circle cx="16" cy="23.5" r="1.5" />
+											<path
+												d="M17,8H15.5A4.49,4.49,0,0,0,11,12.5V13h2v-.5A2.5,2.5,0,0,1,15.5,10H17a2.5,2.5,0,0,1,0,5H15v4.5h2V17a4.5,4.5,0,0,0,0-9Z" />
+										</svg>
+										<div class="Nav-item">Help</div>
+									</div>
+								</a>
+								<div id="moremenu" class="Nav-link">
+									<div class="Nav-item-hover">
+										<svg viewBox="0 0 24 24">
+											<g>
+												<path
+													d="M16.5 10.25c-.965 0-1.75.787-1.75 1.75s.784 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.786-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.966 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75 1.75-.786 1.75-1.75-.784-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.965 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.787-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75z">
+												</path>
+												<path
+													d="M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z">
+												</path>
+											</g>
+										</svg>
+										<div class="Nav-item">More</div>
+									</div>
+									<div class="more-menu-background" style="display: none;">
+										<div class="more-modal-wrapper">
+											<div class="more-menu-content" style="top: 240px; left: 147px;">
+												<a class="more-menu-item more-item" href="" target="_blank" id="help">
+													<span>Help</span>
+													<span><svg viewBox="0 0 32 32">
+															<path
+																d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z" />
+															<circle cx="16" cy="23.5" r="1.5" />
+															<path
+																d="M17,8H15.5A4.49,4.49,0,0,0,11,12.5V13h2v-.5A2.5,2.5,0,0,1,15.5,10H17a2.5,2.5,0,0,1,0,5H15v4.5h2V17a4.5,4.5,0,0,0,0-9Z" />
+														</svg></span>
+												</a>
+												<a class="more-menu-item" href="" target="_blank" aria-label="explorer">
+													<span>Explorer</span><span>'
+														<svg viewBox="0 0 487.95 487.95" style="enable-background:new 0 0 487.95 487.95;"
+															xml:space="preserve">
+															<g>
+																<g>
+																	<path
+																		d="M481.8,453l-140-140.1c27.6-33.1,44.2-75.4,44.2-121.6C386,85.9,299.5,0.2,193.1,0.2S0,86,0,191.4s86.5,191.1,192.9,191.1c45.2,0,86.8-15.5,119.8-41.4l140.5,140.5c8.2,8.2,20.4,8.2,28.6,0C490,473.4,490,461.2,481.8,453z M41,191.4c0-82.8,68.2-150.1,151.9-150.1s151.9,67.3,151.9,150.1s-68.2,150.1-151.9,150.1S41,274.1,41,191.4z" />
+																</g>
+															</g>
+														</svg>
+													</span>
+												</a>
+												<div class="more-menu-item" id="uiModeChange">
+													<span>Display</span>
+													<span>
+														<svg viewBox="0 0 512 512">
+															<g>
+																<path fill="currentColor"
+																	d="M320 32L304 0l-16 32-32 16 32 16 16 32 16-32 32-16zm138.7 149.3L432 128l-26.7 53.3L352 208l53.3 26.7L432 288l26.7-53.3L512 208z"
+																	data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;"></path>
+																<path fill="currentColor"
+																	d="M332.2 426.4c8.1-1.6 13.9 8 8.6 14.5a191.18 191.18 0 0 1-149 71.1C85.8 512 0 426 0 320c0-120 108.7-210.6 227-188.8 8.2 1.6 10.1 12.6 2.8 16.7a150.3 150.3 0 0 0-76.1 130.8c0 94 85.4 165.4 178.5 147.7z"
+																	data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;"></path>
+															</g>
+														</svg>
+													</span>
+												</div>
+												<div class="more-menu-item more-item" id="logout_btn_inn">Logout</div>
 											</div>
-											<a class="more-menu-item more-item" href="/welcome" aria-label="welcome">
-												<span>Login</span>
-												<span><svg viewBox="0 0 24 24"><g><path d="M12 11.816c1.355 0 2.872-.15 3.84-1.256.814-.93 1.078-2.368.806-4.392-.38-2.825-2.117-4.512-4.646-4.512S7.734 3.343 7.354 6.17c-.272 2.022-.008 3.46.806 4.39.968 1.107 2.485 1.256 3.84 1.256zM8.84 6.368c.162-1.2.787-3.212 3.16-3.212s2.998 2.013 3.16 3.212c.207 1.55.057 2.627-.45 3.205-.455.52-1.266.743-2.71.743s-2.255-.223-2.71-.743c-.507-.578-.657-1.656-.45-3.205zm11.44 12.868c-.877-3.526-4.282-5.99-8.28-5.99s-7.403 2.464-8.28 5.99c-.172.692-.028 1.4.395 1.94.408.52 1.04.82 1.733.82h12.304c.693 0 1.325-.3 1.733-.82.424-.54.567-1.247.394-1.94zm-1.576 1.016c-.126.16-.316.246-.552.246H5.848c-.235 0-.426-.085-.552-.246-.137-.174-.18-.412-.12-.654.71-2.855 3.517-4.85 6.824-4.85s6.114 1.994 6.824 4.85c.06.242.017.48-.12.654z"></path></g></svg></span>
-											</a>
 										</div>
 									</div>
 								</div>
+								<% } else {%>
+									<a class="Nav-link" href="/explore" aria-label="explore">
+										<div class="Nav-item-hover" id="explore">
+											<svg viewBox="0 0 24 24">
+												<g>
+													<path
+														d="M21 7.337h-3.93l.372-4.272c.036-.412-.27-.775-.682-.812-.417-.03-.776.27-.812.683l-.383 4.4h-6.32l.37-4.27c.037-.413-.27-.776-.68-.813-.42-.03-.777.27-.813.683l-.382 4.4H3.782c-.414 0-.75.337-.75.75s.336.75.75.75H7.61l-.55 6.327H3c-.414 0-.75.336-.75.75s.336.75.75.75h3.93l-.372 4.272c-.036.412.27.775.682.812l.066.003c.385 0 .712-.295.746-.686l.383-4.4h6.32l-.37 4.27c-.036.413.27.776.682.813l.066.003c.385 0 .712-.295.746-.686l.382-4.4h3.957c.413 0 .75-.337.75-.75s-.337-.75-.75-.75H16.39l.55-6.327H21c.414 0 .75-.336.75-.75s-.336-.75-.75-.75zm-6.115 7.826h-6.32l.55-6.326h6.32l-.55 6.326z">
+													</path>
+												</g>
+											</svg>
+											<div class="Nav-item">Explore</div>
+										</div>
+									</a>
+									<a class="Nav-link" href="" target="_blank" aria-label="help">
+										<div class="Nav-item-hover" id="help">
+											<svg viewBox="0 0 32 32">
+												<path d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z" />
+												<circle cx="16" cy="23.5" r="1.5" />
+												<path
+													d="M17,8H15.5A4.49,4.49,0,0,0,11,12.5V13h2v-.5A2.5,2.5,0,0,1,15.5,10H17a2.5,2.5,0,0,1,0,5H15v4.5h2V17a4.5,4.5,0,0,0,0-9Z" />
+											</svg>
+											<div class="Nav-item">Help</div>
+										</div>
+									</a>
+									<div id="moremenu" class="Nav-link">
+										<div class="Nav-item-hover">
+											<svg viewBox="0 0 24 24">
+												<g>
+													<path
+														d="M16.5 10.25c-.965 0-1.75.787-1.75 1.75s.784 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.786-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.966 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75 1.75-.786 1.75-1.75-.784-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75zm-4.5-2.5c-.965 0-1.75.787-1.75 1.75s.785 1.75 1.75 1.75c.964 0 1.75-.786 1.75-1.75s-.787-1.75-1.75-1.75zm0 2.5c-.414 0-.75-.336-.75-.75 0-.413.337-.75.75-.75s.75.336.75.75c0 .413-.336.75-.75.75z">
+													</path>
+													<path
+														d="M12 22.75C6.072 22.75 1.25 17.928 1.25 12S6.072 1.25 12 1.25 22.75 6.072 22.75 12 17.928 22.75 12 22.75zm0-20C6.9 2.75 2.75 6.9 2.75 12S6.9 21.25 12 21.25s9.25-4.15 9.25-9.25S17.1 2.75 12 2.75z">
+													</path>
+												</g>
+											</svg>
+											<div class="Nav-item">More</div>
+										</div>
+										<div class="more-menu-background" style="display: none;">
+											<div class="more-modal-wrapper">
+												<div class="more-menu-content" style="top: 353.65px; left: 147px;">
+													<a class="more-menu-item" href="" target="_blank" aria-label="help">
+														<span>Help</span>
+														<span><svg viewBox="0 0 32 32">
+																<path
+																	d="M16,2A14,14,0,1,0,30,16,14,14,0,0,0,16,2Zm0,26A12,12,0,1,1,28,16,12,12,0,0,1,16,28Z" />
+																<circle cx="16" cy="23.5" r="1.5" />
+																<path
+																	d="M17,8H15.5A4.49,4.49,0,0,0,11,12.5V13h2v-.5A2.5,2.5,0,0,1,15.5,10H17a2.5,2.5,0,0,1,0,5H15v4.5h2V17a4.5,4.5,0,0,0,0-9Z" />
+															</svg></span>
+													</a>
+													<a class="more-menu-item" href="" target="_blank">
+														<span>Explorer</span>
+														<span><svg viewBox="0 0 487.95 487.95" style="enable-background:new 0 0 487.95 487.95;"
+																xml:space="preserve">
+																<g>
+																	<g>
+																		<path
+																			d="M481.8,453l-140-140.1c27.6-33.1,44.2-75.4,44.2-121.6C386,85.9,299.5,0.2,193.1,0.2S0,86,0,191.4s86.5,191.1,192.9,191.1c45.2,0,86.8-15.5,119.8-41.4l140.5,140.5c8.2,8.2,20.4,8.2,28.6,0C490,473.4,490,461.2,481.8,453z M41,191.4c0-82.8,68.2-150.1,151.9-150.1s151.9,67.3,151.9,150.1s-68.2,150.1-151.9,150.1S41,274.1,41,191.4z" />
+																	</g>
+																</g>
+															</svg></span>
+													</a>
+													<div class="more-menu-item" id="uiModeChange"><span>Display</span>
+														<span>
+															<svg viewBox="0 0 512 512">
+																<g>
+																	<path fill="currentColor"
+																		d="M320 32L304 0l-16 32-32 16 32 16 16 32 16-32 32-16zm138.7 149.3L432 128l-26.7 53.3L352 208l53.3 26.7L432 288l26.7-53.3L512 208z"
+																		data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;">
+																	</path>
+																	<path fill="currentColor"
+																		d="M332.2 426.4c8.1-1.6 13.9 8 8.6 14.5a191.18 191.18 0 0 1-149 71.1C85.8 512 0 426 0 320c0-120 108.7-210.6 227-188.8 8.2 1.6 10.1 12.6 2.8 16.7a150.3 150.3 0 0 0-76.1 130.8c0 94 85.4 165.4 178.5 147.7z"
+																		data-darkreader-inline-fill="" style="--darkreader-inline-fill:currentColor;">
+																	</path>
+																</g>
+															</svg>
+														</span>
+													</div>
+													<a class="more-menu-item more-item" href="/welcome" aria-label="welcome">
+														<span>Login</span>
+														<span><svg viewBox="0 0 24 24">
+																<g>
+																	<path
+																		d="M12 11.816c1.355 0 2.872-.15 3.84-1.256.814-.93 1.078-2.368.806-4.392-.38-2.825-2.117-4.512-4.646-4.512S7.734 3.343 7.354 6.17c-.272 2.022-.008 3.46.806 4.39.968 1.107 2.485 1.256 3.84 1.256zM8.84 6.368c.162-1.2.787-3.212 3.16-3.212s2.998 2.013 3.16 3.212c.207 1.55.057 2.627-.45 3.205-.455.52-1.266.743-2.71.743s-2.255-.223-2.71-.743c-.507-.578-.657-1.656-.45-3.205zm11.44 12.868c-.877-3.526-4.282-5.99-8.28-5.99s-7.403 2.464-8.28 5.99c-.172.692-.028 1.4.395 1.94.408.52 1.04.82 1.733.82h12.304c.693 0 1.325-.3 1.733-.82.424-.54.567-1.247.394-1.94zm-1.576 1.016c-.126.16-.316.246-.552.246H5.848c-.235 0-.426-.085-.552-.246-.137-.174-.18-.412-.12-.654.71-2.855 3.517-4.85 6.824-4.85s6.114 1.994 6.824 4.85c.06.242.017.48-.12.654z">
+																	</path>
+																</g>
+															</svg></span>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+									<% } %>
+										<div class="Nav-main">
+											<% if(locals.userId){ %>
+												<div class="Nav-entry-link" id="new_post_btn" data-ctModalTrigger="#tweet-modal">
+													<div class="Nav-main-btn">POST</div>
+												</div>
+												<% } else { %>
+													<div class="Nav-entry-link" id="main_login_btn">
+														<div class="Nav-main-btn">Login</div>
+													</div>
+													<% /* %>
+														<div class="Nav-entry-link" id="main_disconnect_btn">
+															<div class="Nav-main-btn">Disconnect</div>
+														</div>
+														<% */ %>
+															<% } %>
+										</div>
+						</nav>
+						<% if(locals.userId){ %>
+							<div class="bottom_user_part" id="bottom_user">
+								<div class="user_avater">
+									<% if(locals.userImg){ %>
+										<img alt="" width="100%" height="49px" src="<%- locals.userImg.replace('ipfs://', IPFS_GATEWAY); %>"
+											class="home_pro_pic" />
+										<%}else{%>
+											<img alt="" width="100%" height="49px" src="https://i.postimg.cc/MZdNmMMN/user.png"
+												class="home_pro_pic" />
+											<%}%>
+								</div>
+								<div class="user_name">
+									<h5>@<%-locals.userName%></h5>
+									<!--<span>@stani</span>-->
+								</div>
+								<svg class="three_dot" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000"
+									class="bi bi-three-dots" viewBox="0 0 16 16">
+									<path
+										d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+								</svg>
+								<ul class="drop-up-menu" id="drop_up_menu">
+									<!--<li><a href="#">Add an existing account</a></li>-->
+									<li><a id="disconnect_btn">Logout @<%-locals.userName%></a></li>
+								</ul>
 							</div>
-							<% } %>
-							<div class="Nav-main">
-							<% if(locals.userId){ %>
-								<div class="Nav-entry-link" id="new_post_btn" data-ctModalTrigger="#tweet-modal">
-									<div class="Nav-main-btn">POST</div>
-								</div>
-							<% } else { %>
-								<div class="Nav-entry-link" id="main_login_btn">
-									<div class="Nav-main-btn">Login</div>
-								</div>
-							<% /* %>
-							<div class="Nav-entry-link" id="main_disconnect_btn">
-								<div class="Nav-main-btn">Disconnect</div>
-								</div>
-							<% */ %>
-							<% } %>
-							</div>
-					</nav>
-					<% if(locals.userId){ %>
-					<div class="bottom_user_part" id="bottom_user">
-						<div class="user_avater">
-							<% if(locals.userImg){ %>
-							<img alt="" width="100%" height="49px" src="<%- locals.userImg.replace('ipfs://', IPFS_GATEWAY); %>" class="home_pro_pic" />
-							<%}else{%>
-							<img alt="" width="100%" height="49px" src="https://i.postimg.cc/MZdNmMMN/user.png" class="home_pro_pic" />
-							<%}%>
-						</div>
-						<div class="user_name">
-							<h5>@<%-locals.userName%></h5>
-							<!--<span>@stani</span>-->
-						</div>
-						<svg class="three_dot" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#000000" class="bi bi-three-dots" viewBox="0 0 16 16"><path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" /></svg>
-						<ul class="drop-up-menu" id="drop_up_menu">
-							<!--<li><a href="#">Add an existing account</a></li>-->
-							<li><a id="disconnect_btn">Logout @<%-locals.userName%></a></li>
-						</ul>
-					</div>
-					<%}else{}%>
-						
+							<%}else{}%>
 
 
-						<script>
-							// script for bottom user drop up menu
-							if (document.getElementById('bottom_user') !== null) {
-								const bottom_user = document.getElementById('bottom_user');
-								bottom_user.addEventListener('click', function (e) {
-									e.preventDefault();
-									this.classList.toggle('active')
-									const dropUpMenu = document.getElementById('drop_up_menu');
-									dropUpMenu.classList.toggle('show');
-								})
-							}
-							// Function for hide any user dropupmenu hide on outside click 
-							document.addEventListener('click', function (event) {
-								const bottom_user = document.getElementById('bottom_user');
-								if (!bottom_user.contains(event.target)) {
-									document.getElementById('drop_up_menu').classList.remove('show')
-								}
-							});
-						</script>
+
+								<script>
+									// script for bottom user drop up menu
+									if (document.getElementById('bottom_user') !== null) {
+										const bottom_user = document.getElementById('bottom_user');
+										bottom_user.addEventListener('click', function (e) {
+											e.preventDefault();
+											this.classList.toggle('active')
+											const dropUpMenu = document.getElementById('drop_up_menu');
+											dropUpMenu.classList.toggle('show');
+										})
+									}
+									// Function for hide any user dropupmenu hide on outside click 
+									document.addEventListener('click', function (event) {
+										const bottom_user = document.getElementById('bottom_user');
+										if (!bottom_user.contains(event.target)) {
+											document.getElementById('drop_up_menu').classList.remove('show')
+										}
+									});
+								</script>
 				</div>
 			</div>
 		</div>
@@ -188,7 +311,7 @@
 
 
 	<div class="ct_modal" id="tweet-modal">
-		<form action="#" class="ct_modal_inner">
+		<form name="submit_post" class="ct_modal_inner">
 			<div class="ct_modal_header">
 				<button class="close_ct_modal" data-ctModalClose><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
 						fill="rgb(15, 20, 25)" class="bi bi-x-lg" viewBox="0 0 16 16">
@@ -199,10 +322,12 @@
 			<div class="ct_modal_body">
 				<div class="tweet_avater">
 					<% if(locals.userImg){ %>
-					<img alt="" width="100%" height="49px" src="<%- locals.userImg.replace('ipfs://', IPFS_GATEWAY); %>" class="home_pro_pic" />
-					<%}else{%>
-					<img alt="" width="100%" height="49px" src="https://i.postimg.cc/MZdNmMMN/user.png" class="home_pro_pic" />
-					<%}%>
+						<img alt="" width="100%" height="49px" src="<%- locals.userImg.replace('ipfs://', IPFS_GATEWAY); %>"
+							class="home_pro_pic" />
+						<%}else{%>
+							<img alt="" width="100%" height="49px" src="https://i.postimg.cc/MZdNmMMN/user.png"
+								class="home_pro_pic" />
+							<%}%>
 				</div>
 
 
@@ -238,7 +363,7 @@
 						</div>
 					</div>
 
-					<textarea name="" id="" cols="20" rows="5" placeholder="What's happenning?"></textarea>
+					<textarea name="" id="post_textarea" cols="20" rows="5" placeholder="What's happenning?"></textarea>
 
 					<div class="select type-2">
 						<div class="selectBtn" data-type="firstOption"><span class="option-icon"><svg
@@ -332,7 +457,7 @@
 						</svg>
 					</div>
 				</div>
-				<button type="submit" class="rd-btn">Tweet</button>
+				<button class="rd-btn" type="submit">Tweet</button>
 			</div>
 		</form>
 	</div>
@@ -429,13 +554,54 @@
 			parent.setAttribute('data-type', item.target.closest('.option').getAttribute('data-type'));
 			parent.innerHTML = item.target.closest('.option').querySelector('.display-text').innerHTML;
 		})
+
+		// working with post form
+		function sendHTTPRequest(formData) {
+			const request = new XMLHttpRequest();
+
+			request.open("POST", '/post');
+			request.send(formData);
+		}
+
+		async function processForm(e, params) {
+			if (e.preventDefault) {
+				e.preventDefault()
+			}
+
+			const {
+				elements: {
+					post_textarea,
+					media: { files: [file] }
+				}
+			} = this
+
+			const content = post_textarea.value
+			const image = file
+
+			const formData = new FormData()
+
+			if (content) {
+				formData.append('content', content)
+			}
+
+			if (image) {
+				formData.append('image', image)
+			}
+
+			// send data to lensnode backend POST /post route
+			await sendHTTPRequest(formData)
+
+			return false
+		}
+
+		const submitPostForm = document.forms['submit_post']
+
+		if (submitPostForm.attachEvent) {
+			submitPostForm.attachEvent("submit", processForm);
+		} else {
+			submitPostForm.addEventListener("submit", processForm);
+		}
 	</script>
 	<script type="text/javascript" src="/js/web3Modal.js"></script>
-	<%
-	/*if (req.cookies['lensCurrentProfileId']) {
-			console.log('You are connected to Lens.')
-		} else{
-			console.log('no profile')
-		}
-	//var cookie = getcookie(req);*/
-	%>
+	<% /*if (req.cookies['lensCurrentProfileId']) { console.log('You are connected to Lens.') } else{ console.log('no
+		profile') } //var cookie=getcookie(req);*/ %>

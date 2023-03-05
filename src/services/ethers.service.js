@@ -5,7 +5,14 @@ import omitDeep from 'omit-deep';
 const ETHERS_PROVIDERS = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.matic.today');
 
 export const getSigner = () => {
-  return new Wallet(String(process.env.WALLET_PRIVATE_KEY), ETHERS_PROVIDERS);
+  const walletPrivateKey = String(process.env.WALLET_PRIVATE_KEY)
+
+  if (!walletPrivateKey) {
+    console.error('Wallet Private Key variable is missing!');
+    throw new Error('Wallet Private Key variable is missing!')
+  }
+
+  return new Wallet(walletPrivateKey, ETHERS_PROVIDERS);
 };
 
 export const signedTypeData = (

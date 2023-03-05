@@ -69,7 +69,7 @@ export default router => {
 		const name = req.params.name;
 		const data = await getTags(name);
 		if (data) {
-			res.render('hashtag', { 
+			res.render('hashtag', {
 				articles: data,
 				moment: moment,
 				linkifyHtml: linkifyHtml,

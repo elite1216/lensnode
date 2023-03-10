@@ -1,3 +1,4 @@
+import fetch from 'cross-fetch';
 import { ApolloClient, InMemoryCache, HttpLink, createHttpLink } from '@apollo/client/core/index.js';
 import {
     QUERY_PROFILE_BY_ID,
@@ -11,17 +12,15 @@ import {
     GET_PROFILE_BY_ID,
     GET_PROFILE_FEED,
     RecommendedProfiles,
-    GET_NOTIFICATIONS
+    GET_NOTIFICATIONS,
+    checkDispatcher
 } from './queries.js';
 
-import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA } from './mutations.js';
+import { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA,CreatePostViaDispatcher, Broadcast } from './mutations.js';
 
-import fetch from 'cross-fetch';
-//import { utc } from 'moment/moment.js';
-import { utils } from 'ethers';
 
-//const API_URL = 'https://api-mumbai.lens.dev'
-const API_URL = 'https://api.lens.dev'
+const API_URL = 'https://api-mumbai.lens.dev'
+//const API_URL = 'https://api.lens.dev'
 
 // `httpLink` our gateway to the Lens GraphQL API. It lets us request for data from the API and passes it forward
 const httpLink = new HttpLink({ uri: API_URL, fetch });
@@ -230,6 +229,18 @@ const getRecommendedProfiles = async () => {
     return data?.recommendedProfiles?.slice(0,5);
 };
 
+const getDispatcherStatus = async (id) => {
+    const { data } = await client.query({
+        query: checkDispatcher,
+        variables: {
+            profileRequest: { profileId: id}
+        },
+    });
+    //console.log(data.profile)
+    return data.profile;
+};
+
+
 // MUTATIONS
 
 const refresh = async refreshToken => {
@@ -263,6 +274,37 @@ const createPostTypedData = async (request, options = {}) => {
     }
 }
 
+const createPostViaDispatcherRequest = async (request, token) => {
+    const { data } = await client.mutate({
+        mutation: CreatePostViaDispatcher,
+        variables: {
+            request: request
+        },
+        context: {
+            headers: {
+            Authorization: `Bearer ${token}`
+            }
+        }
+    })
+    //console.log(data.createPostViaDispatcher)
+    return data.createPostViaDispatcher;
+}
+
+const broadcastRequest = async (request, token) => {
+    const { data } = await client.mutate({
+        mutation: CreatePostViaDispatcher,
+        variables: {
+            request: request
+        },
+        context: {
+            headers: {
+            Authorization: `Bearer ${token}`
+            }
+        }
+    })
+    console.log(data.broadcast)
+    return data.broadcast;
+}
 
 export {
     // QUERIES
@@ -280,7 +322,10 @@ export {
     getProfileCollects,
     explorePublications,
     getNotifications,
+    getDispatcherStatus,
     // MUTATIONS
     refresh,
-    createPostTypedData
+    createPostTypedData,
+    createPostViaDispatcherRequest,
+    broadcastRequest
 };

@@ -326,6 +326,20 @@ const commentMirrorOfFieldsFragment = gql`
 	  }
 	}
 `
+
+const relayerResultFieldsFragment = gql`
+	fragment RelayerResultFields on RelayResult {
+		... on RelayerResult {
+		txHash
+		txId
+		}
+		... on RelayError {
+		reason
+		}
+	}
+`
+
+
 export {
   publicationStatsFragment,
   profileFieldsFragment,
@@ -340,5 +354,6 @@ export {
   commentFieldsFragment,
   mirrorBaseFieldsFragment,
   mirrorFieldsFragment,
-  commentMirrorOfFieldsFragment
+  commentMirrorOfFieldsFragment,
+  relayerResultFieldsFragment
 }

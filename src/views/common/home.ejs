@@ -2,14 +2,8 @@
   const userHandle=(article?.profile?.handle)?.replace('.lens', "" ); 
   const userImg=article?.profile?.picture?.original?.url;
   const contentMedia=article?.metadata?.media; 
-  const content=truncate(article?.metadata?.content, 300, {ellipsis: ' ...'}); 
-  const linkyfyOptions={ 
-    truncate: 26, className: 'blink' , nl2br: true, 
-    formatHref: { 
-      hashtag: (val)=> `/hashtag/${val.substr(1)}`, 
-      mention: (val) => `/profile/${val.substr(1)}`
-    }
-  };
+  const content=truncate(cleanText(article?.metadata?.content), 300, {ellipsis: ' ...'}); 
+
 %>
   <div class="inner-card-wrapper">
     <div class="card-userPic-wrapper">
@@ -34,7 +28,7 @@
         </div>
       </div>
       <div class="post-content">
-        <% if(content){%><p><%- linkifyHtml(content, linkyfyOptions) %></p><% } else {%><p><%- content %></p><% } %>
+        <% if(content){%><p><%-content %></p><% } else {%><p><%- content %></p><% } %>
       </div>
       <% if(contentMedia?.length !==0){ 
         let mediaUrl=contentMedia[0]?.original?.url; 

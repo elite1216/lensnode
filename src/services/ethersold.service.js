@@ -1,0 +1,38 @@
+import { ethers, Wallet, utils } from 'ethers';
+import omitDeep from 'omit-deep';
+
+// ethers package must be version "^5.7.2", otherwise it won't work
+const ETHERS_PROVIDERS = new ethers.providers.JsonRpcProvider('https://rpc-mumbai.maticvigil.com');
+//const ETHERS_PROVIDERS = new ethers.providers.JsonRpcProvider('https://polygon-rpc.com');
+
+export const getSigner = () => {
+  const walletPrivateKey = String(process.env.WALLET_PRIVATE_KEY)
+  if (!walletPrivateKey) {
+    console.error('Wallet Private Key variable is missing!');
+    throw new Error('Wallet Private Key variable is missing!')
+  }
+
+  return new Wallet(walletPrivateKey, ETHERS_PROVIDERS);
+};
+
+export const signedTypeData = (
+  domain,
+  types,
+  value
+) => {
+  const signer = getSigner();
+  // remove the __typedname from the signature!
+  return signer._signTypedData(
+    omit(domain, '__typename'),
+    omit(types, '__typename'),
+    omit(value, '__typename')
+  );
+};
+
+export const omit = (object, name) => {
+  return omitDeep(object, name);
+};
+
+export const splitSignature = (signature = '') => {
+  return utils.splitSignature(signature);
+};

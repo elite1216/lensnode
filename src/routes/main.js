@@ -33,7 +33,7 @@ export default router => {
 		res.render('index', {
 			articles: data,
 			moment: moment,
-			linkifyHtml: linkifyHtml,
+			cleanText: cleanText,
 			truncate: truncate
 		})
 	});
@@ -90,7 +90,6 @@ export default router => {
 				post: data,
 				moment: moment,
 				comments: comments,
-				linkifyHtml: linkifyHtml,
 				cleanText: cleanText,
 				truncate: truncate
 			});
@@ -160,6 +159,7 @@ export default router => {
 			truncate: truncate
 		})
 	})
+
 
 	router.use(async (req, res) => {
 		res.status(404).render('common/404');

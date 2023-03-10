@@ -1,4 +1,9 @@
 import { gql } from '@apollo/client/core/index.js';
+import { 
+  relayerResultFieldsFragment
+  } 
+from './fragments.js';
+
 
 const REFRESH_TOKEN_MUTATION = gql`
   mutation Refresh($request: RefreshRequest!) {
@@ -42,4 +47,27 @@ const CREATE_POST_TYPED_DATA = gql`
   }
 `
 
-export { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA };
+const CreatePostViaDispatcher = gql`
+  mutation CreatePostViaDispatcher($request: CreatePublicPostRequest!) {
+    createPostViaDispatcher(request: $request) {
+      ...RelayerResultFields
+    }
+  }
+  ${relayerResultFieldsFragment}
+`
+
+const Broadcast = gql`
+  mutation Broadcast($request: BroadcastRequest!) {
+    broadcast(request: $request) {
+      ... on RelayerResult {
+        txHash
+        txId
+      }
+      ... on RelayError {
+        reason
+      }
+    }
+  }
+`
+
+export { REFRESH_TOKEN_MUTATION, CREATE_POST_TYPED_DATA, CreatePostViaDispatcher, Broadcast };

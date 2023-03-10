@@ -549,7 +549,16 @@ const GET_NOTIFICATIONS = gql`
   ${followModuleFragment}
   ${mediaFieldsFragment}
 `
-
+const checkDispatcher = gql`
+  query Profile($profileRequest: SingleProfileQueryRequest!) {
+    profile(request: $profileRequest) {
+      dispatcher { 
+        address
+        canUseRelay
+      }
+    }
+  }
+`
 
 export {
   QUERY_PROFILE_BY_ID,
@@ -563,5 +572,6 @@ export {
   GET_PROFILE_BY_ID,
   GET_PROFILE_FEED,
   RecommendedProfiles,
-  GET_NOTIFICATIONS
+  GET_NOTIFICATIONS,
+  checkDispatcher
 }

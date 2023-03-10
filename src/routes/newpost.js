@@ -14,12 +14,11 @@ export default router => {
   // but in case user's refreshToken is outdated - we should redirect user to login page
   // this should be done for every secured route (routes with 'authenticate' middleware)
   
-  router.post('/post', [authenticate, multer().single('image')], async (req, res) => {
+  router.post('/newpost', [authenticate, multer().single('image')], async (req, res) => {
     const {
-      
-      cookies: { lensCurrentProfileId, lensCurrentProfileHandle, accessToken },
-      body: { content },
-      file,
+        cookies: { lensCurrentProfileId, lensCurrentProfileHandle, accessToken },
+        body: { content },
+        file,
     } = req
     const token = parseCookies(res.get('Set-Cookie'))?.accessToken ?? accessToken
     const { id: address } = decodeJWT(token)
@@ -38,17 +37,20 @@ export default router => {
           profileId: lensCurrentProfileId,
           accessToken: token
         }
-      )
+    )
 
-      return res
-        .status(201)
-        .render('common/401', { connected: true })
-        console.log(res)
+    return res.send({ error: false, message: 'post done' });
+
+      //return res
+       // .status(201)
+       // .render('common/401', { connected: true })
+       // console.log(res)
     } catch (error) {
-      console.log(error, '<< ERROR IN POST ROUTE >>');
-      return res
-        .status(500)
-        .render('common/401', { connected: true })
+      console.log(error)
+      return res.send({ error: true, message: 'not done' });
+      //return res
+        //.status(500)
+        //.render('common/401', { connected: true })
     }
   });
 }

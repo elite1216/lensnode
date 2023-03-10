@@ -1,6 +1,7 @@
 import { hasTxHashBeenIndexed } from '../../apis/apolloClient.js'
 
 export const pollUntilIndexed = async (input, accessToken) => {
+  //export const pollUntilIndexed = async (input, profileId, prefix) => {
   while (true) {
     const options = {
       context: {
@@ -11,6 +12,7 @@ export const pollUntilIndexed = async (input, accessToken) => {
     }
 
     const response = await hasTxHashBeenIndexed(input, options);
+    //const response = await hasTxHashBeenIndexed(input, profileId, prefix);
     console.log('pool until indexed: result', response);
 
     if (response.hasTxHashBeenIndexed.__typename === 'TransactionIndexedResult') {

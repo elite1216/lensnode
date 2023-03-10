@@ -2936,7 +2936,7 @@ window.onload = () => {
 		//}
     
     
-    document.querySelector("#nCon").addEventListener("click", executeWithdraw);
+    //document.querySelector("#nCon").addEventListener("click", executeWithdraw);
     // set on click events for buttons
     document.querySelector("#main_login_btn").addEventListener("click", walletConnect);
     document.querySelector("#lens-connect").addEventListener("click", authenticateToLens);

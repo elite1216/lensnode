@@ -282,25 +282,6 @@
 
 
 
-								<script>
-									// script for bottom user drop up menu
-									if (document.getElementById('bottom_user') !== null) {
-										const bottom_user = document.getElementById('bottom_user');
-										bottom_user.addEventListener('click', function (e) {
-											e.preventDefault();
-											this.classList.toggle('active')
-											const dropUpMenu = document.getElementById('drop_up_menu');
-											dropUpMenu.classList.toggle('show');
-										})
-									}
-									// Function for hide any user dropupmenu hide on outside click 
-									document.addEventListener('click', function (event) {
-										const bottom_user = document.getElementById('bottom_user');
-										if (!bottom_user.contains(event.target)) {
-											document.getElementById('drop_up_menu').classList.remove('show')
-										}
-									});
-								</script>
 				</div>
 			</div>
 		</div>
@@ -420,3 +401,22 @@
 	<script type="text/javascript" src="/js/post.js"></script>
 	<% /*if (req.cookies['lensCurrentProfileId']) { console.log('You are connected to Lens.') } else{ console.log('no
 		profile') } //var cookie=getcookie(req);*/ %>
+		<script>
+		  // script for bottom user drop up menu
+		  if (document.getElementById('bottom_user') !== null) {
+		    const bottom_user = document.getElementById('bottom_user');
+		    bottom_user.addEventListener('click', function(e) {
+		      e.preventDefault();
+		      this.classList.toggle('active')
+		      const dropUpMenu = document.getElementById('drop_up_menu');
+		      dropUpMenu.classList.toggle('show');
+		    })
+		  }
+		  // Function for hide any user dropupmenu hide on outside click 
+		  document.addEventListener('click', function(event) {
+		    const bottom_user = document.getElementById('bottom_user');
+		    //if (!bottom_user.contains(event.target)) {
+		    //  document.getElementById('drop_up_menu').classList.remove('show')
+		    //}
+		  });
+		</script>
